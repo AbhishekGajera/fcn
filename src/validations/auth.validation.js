@@ -9,6 +9,18 @@ const register = {
   }),
 };
 
+const googleRegister = {
+  body: Joi.object().keys({
+    token: Joi.string().required()
+  }),
+};
+
+const linkedinRegister = {
+  body: Joi.object().keys({
+    code : Joi.string().required()
+  }),
+};
+
 const login = {
   body: Joi.object().keys({
     email: Joi.string().required(),
@@ -50,6 +62,8 @@ const verifyEmail = {
 };
 
 module.exports = {
+  googleRegister,
+  linkedinRegister,
   register,
   login,
   logout,

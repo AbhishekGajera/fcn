@@ -44,6 +44,10 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    registrationType: {
+      type: String,
+      default: 'normal'
+    }
   },
   {
     timestamps: true,
