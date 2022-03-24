@@ -47,6 +47,18 @@ const userSchema = mongoose.Schema(
     registrationType: {
       type: String,
       default: 'normal'
+    },
+    contactno: {
+      type : Number,
+      required : true
+    },
+    dob : {
+      type : String,
+      required : true
+    },
+    country : {
+      type : String,
+      required : true
     }
   },
   {
