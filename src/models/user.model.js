@@ -50,15 +50,18 @@ const userSchema = mongoose.Schema(
     },
     contactno: {
       type : Number,
-      required : true
+      required : true,
+      default: 0000000000,
     },
     dob : {
       type : String,
-      required : true
+      required : true,
+      default: '01/01/-1'
     },
     country : {
       type : String,
-      required : true
+      required : true,
+      default: 'India'
     }
   },
   {
