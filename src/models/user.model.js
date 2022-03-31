@@ -42,7 +42,7 @@ const userSchema = mongoose.Schema(
     },
     isEmailVerified: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     registrationType: {
       type: String,
@@ -62,6 +62,23 @@ const userSchema = mongoose.Schema(
       type : String,
       required : true,
       default: 'India'
+    },
+    bankIfscCode : {
+      type : String,
+      required : false
+    },
+    address : {
+      type : String,
+      required : false
+    },
+    bankAccNo : {
+      type : String,
+      required : false,
+    },
+    branch : {
+      type : String,
+      required : false,
+      default : 'main'
     }
   },
   {

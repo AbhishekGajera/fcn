@@ -6,11 +6,14 @@ const createUser = {
     email: Joi.string().required().email(),
     password: Joi.string().required().custom(password),
     name: Joi.string().required(),
-    role: Joi.string().required().valid('user', 'admin'),
     dob: Joi.string().required(),
     contactno: Joi.string().required(),
-    country: Joi.string().required()
-  }),
+    country: Joi.string().required(),
+    bankIfscCode: Joi.string(),
+    address: Joi.string(),
+    bankAccNo: Joi.string(),
+    branch : Joi.string()
+  }), 
 };
 
 const getUsers = {
