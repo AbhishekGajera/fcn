@@ -11,7 +11,8 @@ const leaveSchema = new mongoose.Schema(
     },
     user: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: 'user',
+      ref: 'User',
+      autopopulate : true
     },
     total_leave: {
       type: Number,
@@ -35,6 +36,7 @@ const leaveSchema = new mongoose.Schema(
 );
 
 // add plugin that converts mongoose to json
+leaveSchema.plugin(require('mongoose-autopopulate'));
 leaveSchema.plugin(toJSON);
 leaveSchema.plugin(paginate);
 
