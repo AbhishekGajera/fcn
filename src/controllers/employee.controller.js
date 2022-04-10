@@ -1,6 +1,8 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { approveLeave, updateLeaveById, deleteLeaveById } = require('../services/employee.service');
+const { approveLeave, updateLeaveById, deleteLeaveById, getLeavesList } = require('../services/employee.service');
+const pick = require('../utils/pick');
+
 
 const leaveApprove = catchAsync(async (req, res) => {
   const result = await approveLeave(req.body);
@@ -17,8 +19,16 @@ const leaveDelete = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const getLeaves = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['name', 'role']);
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await getLeavesList(filter, options);
+  res.send(result);
+});
+
 module.exports = {
   leaveApprove,
   leaveUpdate,
   leaveDelete,
+  getLeaves
 };

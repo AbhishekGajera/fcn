@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { toJSON } = require('./plugins');
+const { toJSON, paginate } = require('./plugins');
 
 //salary
 
@@ -36,6 +36,7 @@ const leaveSchema = new mongoose.Schema(
 
 // add plugin that converts mongoose to json
 leaveSchema.plugin(toJSON);
+leaveSchema.plugin(paginate);
 
 /**
  * @typedef Leave

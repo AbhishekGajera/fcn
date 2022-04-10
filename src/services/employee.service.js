@@ -52,10 +52,9 @@ const approveLeave = async (leaveBody) => {
 /**
  * Delete leave by id
  * @param {ObjectId} leaveId
- * @returns {Promise<User>}
+ * @returns {Promise<Employee>}
  */
  const deleteLeaveById = async (leaveId) => {
-   console.info("leaveId ",leaveId)
   const leave = await getLeaveById(leaveId);
   if (!leave) {
     throw new ApiError(httpStatus.NOT_FOUND, 'leave not found');
@@ -65,9 +64,23 @@ const approveLeave = async (leaveBody) => {
 };
 
 
+/**
+ * Get leaves
+ * @returns {Promise<Employee>}
+ */
+ const getLeavesList = async (filter,options) => {
+ const leave = await Leave.paginate(filter, options);
+ if (!leave) {
+   throw new ApiError(httpStatus.NOT_FOUND, 'leave not found');
+ }
+ return leave;
+};
+
+
 
 module.exports = {
   approveLeave,
   updateLeaveById,
-  deleteLeaveById
+  deleteLeaveById,
+  getLeavesList
 };
