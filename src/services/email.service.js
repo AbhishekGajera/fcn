@@ -49,7 +49,6 @@ If you did not request any password resets, then ignore this email.`;
  */
  const sendNewPasswordEmail = async (to, email, password) => {
   const subject = 'Your username-password';
-  // replace this url with the link to the reset password page of your front-end app
   const text = `Dear user,
   Your email address or ( and ) password has been updated on your profile successfully.
   Your credentials for login from now is as shown below
