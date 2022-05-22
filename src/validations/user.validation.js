@@ -55,7 +55,8 @@ const updateUser = {
       bankAccNo: Joi.string(),
       branch : Joi.string(),
       IBO: Joi.string(),
-      status: Joi.number()
+      role : Joi.string(),
+      status: Joi.number(),
     })
     .min(1),
 };
