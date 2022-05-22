@@ -13,7 +13,8 @@ const swaggerDef = {
   },
   servers: [
     {
-      url: `https://fcn-api.herokuapp.com/v1`,
+      // url: `https://fcn-api.herokuapp.com/v1`,
+      url: `http://localhost:3000/v1`,
     },
   ],
 };

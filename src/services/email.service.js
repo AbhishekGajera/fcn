@@ -52,7 +52,7 @@ If you did not request any password resets, then ignore this email.`;
   const text = `Dear user,
   Your email address or ( and ) password has been updated on your profile successfully.
   Your credentials for login from now is as shown below
-  Email : ${email}
+  Email : ${email},
   Password : ${password}`;
   await sendEmail(to, subject, text);
 };
