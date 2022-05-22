@@ -26,8 +26,8 @@ const getUsers = {
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
     custom: Joi.string(),
-    branch: Joi.string(),
-    IBO: Joi.string(),
+    branch: Joi.string().allow('',null),
+    IBO: Joi.string().allow('',null),
     email: Joi.string()
   }),
 };
