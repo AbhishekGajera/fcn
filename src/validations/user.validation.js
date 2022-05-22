@@ -20,7 +20,7 @@ const createUser = {
 
 const getUsers = {
   query: Joi.object().keys({
-    name: Joi.string(),
+    name: Joi.string().allow('',null),
     role: Joi.string(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
