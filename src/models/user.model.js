@@ -80,12 +80,10 @@ const userSchema = mongoose.Schema(
     branch : {
       type : String,
       required : false,
-      default : 'admin'
     },
     IBO : {
       type : String,
       required : false,
-      default : 'admin'
     },
     status : {
       type : Number,

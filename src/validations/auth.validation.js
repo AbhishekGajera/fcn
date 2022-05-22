@@ -14,6 +14,7 @@ const register = {
     bankAccNo: Joi.string(),
     branch : Joi.string(),
     IBO: Joi.string(),
+    role: Joi.string().valid('user', 'admin','IBO','branch'),
     status: Joi.number()
   }),
 };
