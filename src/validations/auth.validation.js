@@ -8,7 +8,13 @@ const register = {
     name: Joi.string().required(),
     dob: Joi.string().required(),
     contactno: Joi.string().required(),
-    country: Joi.string().required()
+    country: Joi.string().required(),
+    bankIfscCode: Joi.string(),
+    address: Joi.string(),
+    bankAccNo: Joi.string(),
+    branch : Joi.string(),
+    IBO: Joi.string(),
+    status: Joi.number()
   }),
 };
 

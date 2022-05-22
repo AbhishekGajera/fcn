@@ -32,12 +32,30 @@ const paginate = (schema) => {
       sort = 'createdAt';
     }
 
+    const formateCustomValidation = function(spy){
+      Object.keys(spy).forEach(function(key){ spy[key] =  { $regex: '.*' + spy[key] + '.*'} });
+      delete spy.custom
+      return spy;
+    }
+
     const limit = options.limit && parseInt(options.limit, 10) > 0 ? parseInt(options.limit, 10) : 10;
     const page = options.page && parseInt(options.page, 10) > 0 ? parseInt(options.page, 10) : 1;
     const skip = (page - 1) * limit;
 
-    const countPromise = this.countDocuments(filter).exec();
-    let docsPromise = this.find(filter).sort(sort).skip(skip).limit(limit);
+    let countPromise
+    if(filter.hasOwnProperty('custom')){
+      countPromise = this.countDocuments(formateCustomValidation(filter)).exec();
+    }
+    else {
+      countPromise = this.countDocuments(filter).exec();
+    }
+    
+    let docsPromise 
+    if(filter.hasOwnProperty('custom')){
+      docsPromise  = this.find(formateCustomValidation(filter)).sort(sort).skip(skip).limit(limit);
+    } else {
+      docsPromise  = this.find(filter).sort(sort).skip(skip).limit(limit);
+    }
 
     if (options.populate) {
       options.populate.split(',').forEach((populateOption) => {

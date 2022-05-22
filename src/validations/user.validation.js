@@ -12,7 +12,9 @@ const createUser = {
     bankIfscCode: Joi.string(),
     address: Joi.string(),
     bankAccNo: Joi.string(),
-    branch : Joi.string()
+    branch : Joi.string(),
+    IBO: Joi.string(),
+    status: Joi.number()
   }), 
 };
 
@@ -23,6 +25,10 @@ const getUsers = {
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
+    custom: Joi.string(),
+    branch: Joi.string(),
+    IBO: Joi.string(),
+    email: Joi.string()
   }),
 };
 
@@ -44,6 +50,12 @@ const updateUser = {
       dob: Joi.string(),
       contactno: Joi.string(),
       country: Joi.string(),
+      bankIfscCode: Joi.string(),
+      address: Joi.string(),
+      bankAccNo: Joi.string(),
+      branch : Joi.string(),
+      IBO: Joi.string(),
+      status: Joi.number()
     })
     .min(1),
 };

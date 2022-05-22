@@ -32,10 +32,29 @@ const sendEmail = async (to, subject, text) => {
 const sendResetPasswordEmail = async (to, token) => {
   const subject = 'Reset password';
   // replace this url with the link to the reset password page of your front-end app
-  const resetPasswordUrl = `http://link-to-app/reset-password?token=${token}`;
+  const resetPasswordUrl = `http://${process.env.FRONT_END_URL}/reset-password?token=${token}`;
   const text = `Dear user,
 To reset your password, click on this link: ${resetPasswordUrl}
 If you did not request any password resets, then ignore this email.`;
+  await sendEmail(to, subject, text);
+};
+
+
+/**
+ * Send new password email
+ * @param {string} to
+ * @param {string} email
+ * @param {string} password
+ * @returns {Promise}
+ */
+ const sendNewPasswordEmail = async (to, email, password) => {
+  const subject = 'Your username-password';
+  // replace this url with the link to the reset password page of your front-end app
+  const text = `Dear user,
+  Your email address or ( and ) password has been updated on your profile successfully.
+  Your credentials for login from now is as shown below
+  Email : ${email}
+  Password : ${password}`;
   await sendEmail(to, subject, text);
 };
 
@@ -60,4 +79,5 @@ module.exports = {
   sendEmail,
   sendResetPasswordEmail,
   sendVerificationEmail,
+  sendNewPasswordEmail
 };

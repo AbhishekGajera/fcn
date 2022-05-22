@@ -3,6 +3,7 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const { toJSON, paginate } = require('./plugins');
 const { roles } = require('../config/roles');
+const { number } = require('joi');
 
 const userSchema = mongoose.Schema(
   {
@@ -10,6 +11,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true
     },
     email: {
       type: String,
@@ -78,7 +80,17 @@ const userSchema = mongoose.Schema(
     branch : {
       type : String,
       required : false,
-      default : 'main'
+      default : 'admin'
+    },
+    IBO : {
+      type : String,
+      required : false,
+      default : 'admin'
+    },
+    status : {
+      type : Number,
+      enum : [0,1,2], // 0 is Active, 1 is inActive, 2 is Terminate
+      default : 0
     }
   },
   {
@@ -98,6 +110,11 @@ userSchema.plugin(paginate);
  */
 userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
+  return !!user;
+};
+
+userSchema.statics.isUserNameTaken = async function (name, excludeUserId) {
+  const user = await this.findOne({ name, _id: { $ne: excludeUserId } });
   return !!user;
 };
 
