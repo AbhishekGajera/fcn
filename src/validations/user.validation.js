@@ -14,7 +14,7 @@ const createUser = {
     bankAccNo: Joi.string(),
     branch : Joi.string(),
     IBO: Joi.string(),
-    status: Joi.number()
+    role: Joi.string().valid('user', 'admin','IBO','branch'),
   }), 
 };
 
