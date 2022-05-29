@@ -9,5 +9,6 @@ const router = express.Router();
 router.use(formidable())
 
 router.post('/add-cost', costController.costApprove);
+router.get('/fetch-cost', costController.getCosts);
 
 module.exports = router;

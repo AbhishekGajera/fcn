@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { toJSON } = require('./plugins');
+const { toJSON , paginate} = require('./plugins');
 
 // cost
 
@@ -18,6 +18,8 @@ const costSchema = new mongoose.Schema({
 
 // add plugin that converts mongoose to json
 costSchema.plugin(toJSON);
+costSchema.plugin(require('mongoose-autopopulate'));
+costSchema.plugin(paginate);
 
 /**
  * @typedef Cost

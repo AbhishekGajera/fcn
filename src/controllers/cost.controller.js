@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { approveCost } = require('../services/cost.service');
+const { approveCost, getCostsList } = require('../services/cost.service');
 const pick = require('../utils/pick');
 const formidable = require('formidable');
 const path = require('path')
@@ -38,6 +38,14 @@ const costApprove = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(result);
 });
 
+const getCosts = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await getCostsList(filter, options);
+  res.send(result);
+});
+
 module.exports = {
   costApprove,
+  getCosts
 };

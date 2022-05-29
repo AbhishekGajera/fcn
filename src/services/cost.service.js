@@ -65,7 +65,7 @@ const approveCost = async (leaveBody) => {
 
 
 /**
- * Get leaves
+ * Get costs
  * @returns {Promise<Employee>}
  */
  const getCostsList = async (filter,options) => {
