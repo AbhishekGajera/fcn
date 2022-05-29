@@ -4,10 +4,11 @@ const { toJSON , paginate} = require('./plugins');
 // cost
 
 const costSchema = new mongoose.Schema({
-  totalCost: { type: String, required: true },
+  totalCost: { type: Number, required: true },
   category : { type: String, required: true },
   description : { type : String, required : false },
   image : { type : String, required : false },
+  type : { type : String, required : false, enum : ['Office expence','Employee expence','Misleniuneous expence','Other expence'] },
   user: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'User',

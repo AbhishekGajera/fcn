@@ -7,7 +7,8 @@ const addCost = {
     totalCost: Joi.number().required(),
     category: Joi.string().required(),
     description: Joi.string(),
-    image: Joi.string(),
+    image: Joi.allow(),
+    type: Joi.string()
   }),
 };
 
