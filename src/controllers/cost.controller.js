@@ -46,8 +46,12 @@ const getCosts = catchAsync(async (req, res) => {
 });
 
 const deleteCost = catchAsync(async (req, res) => {
-  await deleteCostById(req.params.costId);
-  res.status(httpStatus.NO_CONTENT).send();
+  try {
+    await deleteCostById(req.params.costId);
+    res.status(httpStatus.CREATED).send({ success : true });
+  } catch (error) {
+    res.status(httpStatus.NOT_FOUND).send({ success : false });
+  }
 });
 
 module.exports = {
