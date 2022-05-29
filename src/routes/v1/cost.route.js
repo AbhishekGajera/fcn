@@ -1,6 +1,6 @@
 const express = require('express');
 const validate = require('../../middlewares/validate');
-const addCost = require('../../validations/cost.validation');
+const costValidation = require('../../validations/cost.validation');
 const costController = require('../../controllers/cost.controller');
 const formidable = require('express-formidable');
 
@@ -10,5 +10,6 @@ router.use(formidable())
 
 router.post('/add-cost', costController.costApprove);
 router.get('/fetch-cost', costController.getCosts);
+router.delete('/delete-cost/:costId',validate(costValidation.deleteCost), costController.deleteCost);
 
 module.exports = router;

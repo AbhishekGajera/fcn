@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { approveCost, getCostsList } = require('../services/cost.service');
+const { approveCost, getCostsList, deleteCostById } = require('../services/cost.service');
 const pick = require('../utils/pick');
 const formidable = require('formidable');
 const path = require('path')
@@ -45,7 +45,13 @@ const getCosts = catchAsync(async (req, res) => {
   res.send(result);
 });
 
+const deleteCost = catchAsync(async (req, res) => {
+  await deleteCostById(req.params.costId);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
 module.exports = {
   costApprove,
-  getCosts
+  getCosts,
+  deleteCost
 };

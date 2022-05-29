@@ -11,6 +11,13 @@ const addCost = {
   }),
 };
 
+const deleteCost = {
+  params: Joi.object().keys({
+    costId: Joi.string().custom(objectId),
+  }),
+};
+
 module.exports = {
   addCost,
+  deleteCost
 };

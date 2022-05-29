@@ -51,11 +51,11 @@ const approveCost = async (leaveBody) => {
 
 /**
  * Delete cost by id
- * @param {ObjectId} leaveId
+ * @param {ObjectId} costId
  * @returns {Promise<Employee>}
  */
- const deleteCostById = async (leaveId) => {
-  const cost = await getCostById(leaveId);
+ const deleteCostById = async (costId) => {
+  const cost = await getCostById(costId);
   if (!cost) {
     throw new ApiError(httpStatus.NOT_FOUND, 'cost not found');
   }
