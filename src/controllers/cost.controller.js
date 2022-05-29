@@ -48,9 +48,9 @@ const getCosts = catchAsync(async (req, res) => {
 const deleteCost = catchAsync(async (req, res) => {
   try {
     await deleteCostById(req.params.costId);
-    res.status(httpStatus.CREATED).send({ success : true });
+    return res.status(httpStatus.CREATED).send({ success : true });
   } catch (error) {
-    res.status(httpStatus.NOT_FOUND).send({ success : false });
+    return res.status(httpStatus.NOT_FOUND).send({ success : false });
   }
 });
 
