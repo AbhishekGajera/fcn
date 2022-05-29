@@ -15,7 +15,9 @@ cloudinary.config({
     var mainFolderName = "main"
     // filePathOnCloudinary :
     // path of image we want when it is uploded to cloudinary
-    var filePathOnCloudinary = mainFolderName + "/" + locaFilePath
+
+    var imageName  = locaFilePath?.split("/")?.pop();
+    var filePathOnCloudinary = mainFolderName + '/invoice/' + imageName
   
     return cloudinary.uploader.upload(locaFilePath,{ "public_id": filePathOnCloudinary})
     .then((result) => {
