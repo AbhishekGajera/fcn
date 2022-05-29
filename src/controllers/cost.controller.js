@@ -39,7 +39,7 @@ const costApprove = catchAsync(async (req, res) => {
 });
 
 const getCosts = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
+  const filter = pick(req.query, ['category','type']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await getCostsList(filter, options);
   res.send(result);
