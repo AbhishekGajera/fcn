@@ -59,7 +59,7 @@ const approveCost = async (leaveBody) => {
   if (!costdata) {
     throw new ApiError(httpStatus.NOT_FOUND, 'cost not found');
   }
-  await Cost.remove();
+  await costdata.remove();
   return costdata;
 };
 
