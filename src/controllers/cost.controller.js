@@ -5,16 +5,7 @@ const pick = require('../utils/pick');
 const formidable = require('formidable');
 const path = require('path')
 const fs = require('fs');
-
-
-const isFileValid = (file) => {
-  const type = file?.type?.split('/').pop();
-  const validTypes = ['jpg', 'jpeg', 'png', 'pdf'];
-  if (validTypes.indexOf(type) === -1) {
-    return false;
-  }
-  return true;
-};
+const uploadToCloudinary = require('../utils/uploadToCloudnary');
 
 const costApprove = catchAsync(async (req, res) => {
   const form = formidable.IncomingForm();
@@ -23,17 +14,6 @@ const costApprove = catchAsync(async (req, res) => {
   form.multiples = true;
   form.maxFileSize = 50 * 1024 * 1024; // 5MB
   form.uploadDir = uploadFolder;
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      console.log('Error parsing the files');
-      return res.status(400).json({
-        status: 'Fail',
-        message: 'There was an error parsing the files',
-        error: err,
-      });
-    }
-  });
-
 
   // Check if multiple files or a single file
   if (!req?.files?.length) {
@@ -46,8 +26,9 @@ const costApprove = catchAsync(async (req, res) => {
 
     try {
       // renames the file in the directory
-      fs.renameSync(file?.path || '', (uploadFolder + '/' + fileName));
-      req.fields.image = fileName
+      fs.renameSync((file?.path || ''), (uploadFolder + '/' + fileName));
+      const result = await uploadToCloudinary(uploadFolder + '/' + fileName)
+      req.fields.image = result.url
     } catch (error) {
       console.log(error);
     }
