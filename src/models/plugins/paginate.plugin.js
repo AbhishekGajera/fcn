@@ -33,7 +33,7 @@ const paginate = (schema) => {
     }
 
     const formateCustomValidation = function(spy){
-      Object.keys(spy).forEach(function(key){ spy[key] =  { $regex: '.*' + spy[key] + '.*'} });
+      Object.keys(spy).forEach(function(key){ spy[key] =  { $regex: '.*' + spy[key] + '.*',$options:'i'} });
       delete spy.custom
       return spy;
     }

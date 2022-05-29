@@ -1,13 +1,13 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { approveCost, getCostsList, deleteCostById } = require('../services/cost.service');
+const { approveProduct, getProductsList, deleteProductById } = require('../services/product.service');
 const pick = require('../utils/pick');
 const formidable = require('formidable');
 const path = require('path')
 const fs = require('fs');
 const uploadToCloudinary = require('../utils/uploadToCloudnary');
 
-const costApprove = catchAsync(async (req, res) => {
+const productApprove = catchAsync(async (req, res) => {
   const form = formidable.IncomingForm();
   const uploadFolder = path.join(__dirname, '../../files');
 
@@ -27,27 +27,27 @@ const costApprove = catchAsync(async (req, res) => {
     try {
       // renames the file in the directory
       fs.renameSync((file?.path || ''), (uploadFolder + '/' + fileName));
-      const result = await uploadToCloudinary(uploadFolder + '/' + fileName)
+      const result = await uploadToCloudinary(uploadFolder + '/' + fileName,'products')
       req.fields.image = result.url
     } catch (error) {
       console.log(error);
     }
   }
 
-  const result = await approveCost(req.fields);
+  const result = await approveProduct(req.fields);
   res.status(httpStatus.CREATED).send(result);
 });
 
-const getCosts = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['category','type','user']);
+const getProducts = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['name']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
-  const result = await getCostsList(filter, options);
+  const result = await getProductsList(filter, options);
   res.send(result);
 });
 
-const deleteCost = catchAsync(async (req, res) => {
+const deleteProduct = catchAsync(async (req, res) => {
   try {
-    await deleteCostById(req.params.costId);
+    await deleteProductById(req.params.productId);
     return res.status(httpStatus.CREATED).send({ success : true });
   } catch (error) {
     return res.status(httpStatus.NOT_FOUND).send({ success : false });
@@ -55,7 +55,7 @@ const deleteCost = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-  costApprove,
-  getCosts,
-  deleteCost
+  productApprove,
+  getProducts,
+  deleteProduct
 };

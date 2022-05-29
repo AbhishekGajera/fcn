@@ -8,7 +8,7 @@ cloudinary.config({
     api_secret: '3Sr8IIcw_g4AN-bVxSIFv7fuiaQ' 
   });
 
- const uploadToCloudinary = async (locaFilePath) => {
+ const uploadToCloudinary = async (locaFilePath,folderName) => {
     // locaFilePath :
     // path of image which was just uploaded to "uploads" folder
   
@@ -17,7 +17,7 @@ cloudinary.config({
     // path of image we want when it is uploded to cloudinary
 
     var imageName  = locaFilePath?.split("/")?.pop();
-    var filePathOnCloudinary = mainFolderName + '/invoice/' + imageName
+    var filePathOnCloudinary = mainFolderName +  (`/${folderName}/` || '/invoice/') + imageName
   
     return cloudinary.uploader.upload(locaFilePath,{ "public_id": filePathOnCloudinary})
     .then((result) => {

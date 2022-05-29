@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 const { toJSON , paginate} = require('./plugins');
 
-// cost
+// product
 
-const costSchema = new mongoose.Schema({
-  totalCost: { type: Number, required: true },
+const productSchema = new mongoose.Schema({
+  name : { type: String, required: true },
   category : { type: String, required: true },
   description : { type : String, required : false },
   image : { type : String, required : false },
-  type : { type : String, required : false, enum : ['Office expence','Employee expence','Misleniuneous expence','Other expence'] },
   user: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'User',
@@ -22,13 +21,13 @@ const costSchema = new mongoose.Schema({
   });
 
 // add plugin that converts mongoose to json
-costSchema.plugin(toJSON);
-costSchema.plugin(require('mongoose-autopopulate'));
-costSchema.plugin(paginate);
+productSchema.plugin(toJSON);
+productSchema.plugin(require('mongoose-autopopulate'));
+productSchema.plugin(paginate);
 
 /**
- * @typedef Cost
+ * @typedef Product
  */
-const Cost = mongoose.model("Cost", costSchema);
+const Product = mongoose.model("Product", productSchema);
 
-module.exports = Cost;
+module.exports = Product;
