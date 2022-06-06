@@ -31,8 +31,9 @@ const targetSchema = new mongoose.Schema({
     required: true,
   },
   status : {
-    type: String,
+    type: Number,
     required: true,
+    default : 1,
     enum: [1,2,3,4] // 1 : is for running , 2: is for finished , 3: is for canceled , 4: is for archieved
   }
 },
