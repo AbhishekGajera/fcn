@@ -6,6 +6,7 @@ const costRoute = require('./cost.route');
 const productRoute = require('./product.route');
 const docsRoute = require('./docs.route');
 const targetRoute = require('./target.route');
+const appoinmentsRoute = require('./appoiments.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -34,6 +35,10 @@ const defaultRoutes = [
   {
     path: '/target',
     route: targetRoute,
+  },
+  {
+    path: '/appoinments',
+    route: appoinmentsRoute,
   },
 ];
 

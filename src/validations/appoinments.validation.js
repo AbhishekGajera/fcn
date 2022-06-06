@@ -1,12 +1,12 @@
 const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
-const deleteTarget = {
+const deleteAppoinmnets = {
   params: Joi.object().keys({
-    targetId: Joi.string().custom(objectId),
+    appoinmentsId: Joi.string().custom(objectId),
   }),
 };
 
 module.exports = {
-  deleteTarget
+  deleteAppoinmnets
 };
