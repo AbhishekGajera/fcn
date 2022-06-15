@@ -1,11 +1,11 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { approveAppoinment, updateAppoinmentById, deleteAppoinmentById, getAppoinmentsList } = require('../services/appoinments.service');
+const { approveAppoinments, updateAppoinmentById, deleteAppoinmentById, getAppoinmentsList } = require('../services/appoinments.service');
 const pick = require('../utils/pick');
 
 
 const appoinmentsApprove = catchAsync(async (req, res) => {
-  const result = await approveAppoinment(req.body);
+  const result = await approveAppoinments(req.body);
   res.status(httpStatus.CREATED).send(result);
 });
 

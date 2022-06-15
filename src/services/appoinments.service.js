@@ -8,7 +8,7 @@ const { getUserById } = require('./user.service')
  * @param {Object} leaveBody
  * @returns {Promise<User>}
  */
-const approveAppoinmnets = async (leaveBody) => {
+const approveAppoinments = async (leaveBody) => {
   return Appoinmnets.create(leaveBody);
 };
 
@@ -79,7 +79,7 @@ const approveAppoinmnets = async (leaveBody) => {
 
 
 module.exports = {
-  approveAppoinmnets,
+  approveAppoinments,
   updateAppoinmnetsById,
   deleteAppoinmnetsById,
   getAppoinmnetssList
