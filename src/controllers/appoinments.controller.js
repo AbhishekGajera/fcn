@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { approveAppoinments, updateAppoinmentById, deleteAppoinmentById, getAppoinmentsList } = require('../services/appoinments.service');
+const { approveAppoinments, updateAppoinmentById, deleteAppoinmentById, getAppoinmnetssList } = require('../services/appoinments.service');
 const pick = require('../utils/pick');
 
 
@@ -22,7 +22,7 @@ const appoinmentsDelete = catchAsync(async (req, res) => {
 const getAppoinments = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'role','user']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
-  const result = await getAppoinmentsList(filter, options);
+  const result = await getAppoinmnetssList(filter, options);
   res.send(result);
 });
 
