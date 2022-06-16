@@ -12,6 +12,10 @@ router
 .post(auth(), appoinmentsController.appoinmentsApprove)
 
 router
+.route('/update-appoinment')
+.patch(auth(), appoinmentsController.appoinmentsUpdate)
+
+router
 .route('/fetch-appoinment')
 .get(auth(), appoinmentsController.getAppoinments)
 
