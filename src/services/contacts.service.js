@@ -5,7 +5,7 @@ const ApiError = require('../utils/ApiError');
 /**
  * Create a contact
  * @param {Object} leaveBody
- * @returns {Promise<User>}
+ * @returns {Promise<Contact>}
  */
 const addContact = async (leaveBody) => {
   return Contact.create(leaveBody);
@@ -15,7 +15,7 @@ const addContact = async (leaveBody) => {
 
 /**
  * Get Contacts
- * @returns {Promise<Employee>}
+ * @returns {Promise<Contact>}
  */
  const getContactList = async (filter,options) => {
  const contact = await Contact.paginate(filter, options);

@@ -23,11 +23,10 @@ const contactSchema = new mongoose.Schema({
   type : {
     type: Number,
     required: true,
-    enum: [1,2]
+    enum: [1,2] // 1 :- free 2 :- paid
   },
-  fromDate: {
+  date: {
     type: Date,
-    // required : true
   },
 },
 {

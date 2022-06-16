@@ -13,7 +13,7 @@ const contactAdd = catchAsync(async (req, res) => {
 
 
 const getContacts = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', 'role','user']);
+  const filter = pick(req.query, ['name', 'role','user','custom']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await getContactList(filter, options);
   res.send(result);
