@@ -7,7 +7,6 @@ const appoinmentsSchema = new mongoose.Schema({
   user: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'User',
-    required: true,
     autopopulate: true,
   },
   fromDate: {
@@ -18,7 +17,7 @@ const appoinmentsSchema = new mongoose.Schema({
     type: Date,
     required : true
   },
-  Description: {
+  desc: {
     type: String,
   },
   status : {

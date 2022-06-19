@@ -70,6 +70,7 @@ const approveAppoinments = async (leaveBody) => {
  */
  const getAppoinmnetssList = async (filter,options) => {
  const appoinments = await Appoinmnets.paginate(filter, options);
+ console.log("appoi",appoinments);
  if (!appoinments) {
    throw new ApiError(httpStatus.NOT_FOUND, 'appoinments not found');
  }
