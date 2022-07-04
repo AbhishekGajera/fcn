@@ -90,6 +90,14 @@ const userSchema = mongoose.Schema(
       type : Number,
       enum : [0,1,2], // 0 is Active, 1 is inActive, 2 is Terminate
       default : 0
+    },
+    aadhar_card_no : {
+      type : String,
+      required : false,
+    },
+    pan_card_no : {
+      type : String,
+      required : false,
     }
   },
   {

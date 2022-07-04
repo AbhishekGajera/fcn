@@ -15,6 +15,8 @@ const createUser = {
     branch : Joi.string(),
     ibo: Joi.string(),
     role: Joi.string().valid('user', 'admin','IBO','branch'),
+    aadhar_card_no: Joi.string(),
+    pan_card_no: Joi.string()
   }), 
 };
 
@@ -57,6 +59,8 @@ const updateUser = {
       IBO: Joi.string(),
       role: Joi.string().valid('user', 'admin','IBO','branch'),
       status: Joi.number(),
+      aadhar_card_no: Joi.string(),
+      pan_card_no: Joi.string()
     })
     .min(1),
 };
