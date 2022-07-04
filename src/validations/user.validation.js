@@ -9,11 +9,11 @@ const createUser = {
     dob: Joi.string().required(),
     contactno: Joi.string().required(),
     country: Joi.string().required(),
-    bankIfscCode: Joi.string(),
+    bankIfscCode: Joi.string().uppercase({ force: true }),
     address: Joi.string(),
     bankAccNo: Joi.string(),
     branch : Joi.string(),
-    IBO: Joi.string(),
+    ibo: Joi.string(),
     role: Joi.string().valid('user', 'admin','IBO','branch'),
   }), 
 };

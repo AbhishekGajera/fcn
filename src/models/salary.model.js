@@ -10,7 +10,7 @@ const salarySchema = new mongoose.Schema({
   BankName: { type: String, required: true },
   AccountNo: { type: String, required: true },
   AccountHolderName: { type: String, required: true },
-  IFSCcode: { type: String, required: true },
+  IFSCcode: { type: String, lowercase:false, required: true },
   TaxDeduction: { type: String, required: true },
   user: {
     type: mongoose.SchemaTypes.ObjectId,

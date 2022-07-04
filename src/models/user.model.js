@@ -67,6 +67,7 @@ const userSchema = mongoose.Schema(
     },
     bankIfscCode : {
       type : String,
+      lowercase:false,
       required : false
     },
     address : {
@@ -81,7 +82,7 @@ const userSchema = mongoose.Schema(
       type : String,
       required : false,
     },
-    IBO : {
+    ibo : {
       type : String,
       required : false,
     },
