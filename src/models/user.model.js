@@ -78,6 +78,15 @@ const userSchema = mongoose.Schema(
       type : String,
       required : false,
     },
+    branchHeadName : {
+      type : String,
+      required : false
+    },
+    branchContact : {
+      type : Number,
+      required : false,
+    },
+    
     branch : {
       type : String,
       required : false,
