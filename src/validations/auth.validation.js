@@ -17,7 +17,13 @@ const register = {
     role: Joi.string().valid('user', 'admin','IBO','branch'),
     status: Joi.number(),
     aadhar_card_no: Joi.string(),
-    pan_card_no: Joi.string()
+    pan_card_no: Joi.string(),
+    branch_head : {
+      name : Joi.string(),
+      contact_no : Joi.string(),
+      aadhar_card_no : Joi.string(),
+      pan_card_no : Joi.string()
+    }
   }),
 };
 

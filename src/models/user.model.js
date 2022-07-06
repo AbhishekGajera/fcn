@@ -98,6 +98,24 @@ const userSchema = mongoose.Schema(
     pan_card_no : {
       type : String,
       required : false,
+    },
+    branch_head : {
+      name : {
+        type : String,
+        default : ''
+      },
+      contact_no : {
+        type : String,
+        default : ''
+      },
+      aadhar_card_no : {
+        type : String,
+        default : ''
+      },
+      pan_card_no : {
+        type : String,
+        default : ''
+      }
     }
   },
   {
