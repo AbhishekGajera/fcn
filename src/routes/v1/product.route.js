@@ -4,14 +4,19 @@ const auth = require('../../middlewares/auth');
 const productValidation = require('../../validations/product.validation');
 const productController = require('../../controllers/product.controller');
 const formidable = require('express-formidable');
+var multer = require('multer');
 
 
 const router = express.Router();
-router.use(formidable())
+router.use(formidable());
+
+const upload = multer({ dest: 'images/' });
+
+
 
 router
   .route('/')
-  .post(auth(), productController.productApprove)
+  .post(auth(),upload.single('image'), productController.productApprove)
   .get(auth(), productController.getProducts);
 
   router

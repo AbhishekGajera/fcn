@@ -14,6 +14,8 @@ const productApprove = catchAsync(async (req, res) => {
   form.multiples = true;
   form.maxFileSize = 50 * 1024 * 1024; // 5MB
   form.uploadDir = uploadFolder;
+  console.info(req?.file)
+  console.info(req?.files)
 
   // Check if multiple files or a single file
   if (!req?.files?.length) {
@@ -30,7 +32,7 @@ const productApprove = catchAsync(async (req, res) => {
       const result = await uploadToCloudinary(uploadFolder + '/' + fileName,'products')
       req.fields.image = result.url
     } catch (error) {
-      console.log(error);
+      console.error(error)
     }
   }
 
