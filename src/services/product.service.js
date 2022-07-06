@@ -27,7 +27,7 @@ const approveProduct = async (leaveBody) => {
  * Update product by id
  * @param {ObjectId} leaveId
  * @param {Object} updateBody
- * @returns {Promise<User>}
+ * @returns {Promise<Product>}
  */
  const updateProductById = async (leaveId, updateBody) => {
   const product = await getProductById(leaveId);

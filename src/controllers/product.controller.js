@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { approveProduct, getProductsList, deleteProductById } = require('../services/product.service');
+const { approveProduct, getProductsList, deleteProductById,updateProductById } = require('../services/product.service');
 const pick = require('../utils/pick');
 const formidable = require('formidable');
 const path = require('path')
@@ -56,8 +56,14 @@ const deleteProduct = catchAsync(async (req, res) => {
   }
 });
 
+const productsUpdate = catchAsync(async (req, res) => {
+  const result = await updateProductById(req.body.productId,req.body);
+  res.send(result);
+});
+
 module.exports = {
   productApprove,
   getProducts,
-  deleteProduct
+  deleteProduct,
+  productsUpdate
 };

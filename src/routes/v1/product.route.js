@@ -20,6 +20,10 @@ router
   .get(auth(), productController.getProducts);
 
   router
+.route('/update-product')
+.patch(auth(), productController.productsUpdate)
+
+  router
   .route('/:productId')
   .get(auth(),validate(productValidation.deleteProduct), productController.deleteProduct)
 
