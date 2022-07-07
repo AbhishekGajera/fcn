@@ -91,7 +91,7 @@ const userSchema = mongoose.Schema(
       type : String,
       required : false,
     },
-    ibo : {
+    IBO : {
       type : String,
       required : false,
     },
