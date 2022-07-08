@@ -95,6 +95,10 @@ const userSchema = mongoose.Schema(
       type : String,
       required : false,
     },
+    product : {
+      type : String,
+      required : false,
+    },
     status : {
       type : Number,
       enum : [0,1,2], // 0 is Active, 1 is inActive, 2 is Terminate
@@ -108,24 +112,22 @@ const userSchema = mongoose.Schema(
       type : String,
       required : false,
     },
-    branch_head : {
-      name : {
+    b_head_name : {
         type : String,
         default : ''
       },
-      contact_no : {
+    b_head_contact_no : {
         type : String,
         default : ''
       },
-      aadhar_card_no : {
+    b_aadhar_card_no : {
         type : String,
         default : ''
       },
-      pan_card_no : {
+      b_pan_card_no : {
         type : String,
         default : ''
       }
-    }
   },
   {
     timestamps: true,

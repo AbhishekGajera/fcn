@@ -13,16 +13,17 @@ const createUser = {
     address: Joi.string(),
     bankAccNo: Joi.string(),
     branch : Joi.string(),
+    product : Joi.string(),
+
     ibo: Joi.string(),
     role: Joi.string().valid('user', 'admin','IBO','branch'),
     aadhar_card_no: Joi.string(),
     pan_card_no: Joi.string(),
-    branch_head : {
-      name : Joi.string(),
-      contact_no : Joi.string(),
-      aadhar_card_no : Joi.string(),
-      pan_card_no : Joi.string()
-    }
+    b_head_name : Joi.string(),
+    b_head_contact_no : Joi.string(),
+    b_aadhar_card_no : Joi.string(),
+    b_pan_card_no : Joi.string()
+ 
   }), 
 };
 
