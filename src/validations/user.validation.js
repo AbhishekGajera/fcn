@@ -22,7 +22,8 @@ const createUser = {
     b_head_name : Joi.string(),
     b_head_contact_no : Joi.string(),
     b_aadhar_card_no : Joi.string(),
-    b_pan_card_no : Joi.string()
+    b_pan_card_no : Joi.string(),
+    self_declaration : Joi.string()
  
   }), 
 };

@@ -13,6 +13,18 @@ const userSchema = mongoose.Schema(
       trim: true,
       unique: true
     },
+    first_name: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true
+    },
+     last_name: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true
+    },
     email: {
       type: String,
       required: true,
@@ -99,6 +111,7 @@ const userSchema = mongoose.Schema(
       type : String,
       required : false,
     },
+    image : { type : String, required : false },
     status : {
       type : Number,
       enum : [0,1,2], // 0 is Active, 1 is inActive, 2 is Terminate
@@ -127,7 +140,11 @@ const userSchema = mongoose.Schema(
       b_pan_card_no : {
         type : String,
         default : ''
-      }
+      },
+      self_declaration : {
+        type : String,
+        default : ''
+      },
   },
   {
     timestamps: true,
