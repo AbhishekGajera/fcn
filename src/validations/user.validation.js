@@ -5,7 +5,12 @@ const createUser = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().custom(password),
-    name: Joi.string().required(),
+    name: Joi.string(),
+    first_name: Joi.string(),
+    last_name: Joi.string(),
+    image: Joi.allow(),
+
+
     dob: Joi.string().required(),
     contactno: Joi.string().required(),
     country: Joi.string().required(),

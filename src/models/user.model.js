@@ -9,19 +9,19 @@ const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       unique: true
     },
     first_name: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       unique: true
     },
      last_name: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
       unique: true
     },
@@ -72,6 +72,9 @@ const userSchema = mongoose.Schema(
       required : true,
       default: '01/01/-1'
     },
+   image : { 
+    type : String, required : false
+   },
     country : {
       type : String,
       required : true,
