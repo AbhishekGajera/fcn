@@ -9,24 +9,27 @@ const revenueSchema = new mongoose.Schema({
 
 
     product: {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: 'Product',
-        required: true,
-        autopopulate: true,
+      type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Product',
+    required: true,
+    autopopulate: true,
       },
+      branch : {
+        type : String,
+        required : false,
+      },
+      IBO : {
+        type : String,
+        required : false,
+      },
+      
       user: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'User',
         required: true,
         autopopulate: true,
       },
-      from_user: {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: 'User',
-        required: true,
-        autopopulate: true,
-      },
-      description: {
+      earning_from: {
         type: String,
         required: true,
       },
@@ -35,6 +38,14 @@ const revenueSchema = new mongoose.Schema({
         required: true,
       },
       net_revenue: {
+        type: Number,
+        required: true,
+      },
+      commision_branch: {
+        type: Number,
+        required: true,
+      },
+      commision_ibo: {
         type: Number,
         required: true,
       },

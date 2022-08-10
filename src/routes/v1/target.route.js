@@ -9,14 +9,22 @@ const router = express.Router();
 
 router
 .route('/add-target')
-.post(auth(), targetController.targetApprove)
+.post(auth(),targetController.targetApprove)
 
 router
 .route('/fetch-target')
-.get(auth(), targetController.getTargets)
+.get(auth(),targetController.getTargets)
+
+router
+.route('/update-target')
+.patch(targetController.targetUpdate)
 
 router
 .route('/delete-target/:targetId')
 .get(auth(),validate(targetValidation.deleteTarget), targetController.targetDelete)
+
+// router
+// .route('/delete-target/:targetId')
+// .get(auth(),targetController.targetDelete)
 
 module.exports = router;
