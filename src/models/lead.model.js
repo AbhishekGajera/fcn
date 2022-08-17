@@ -15,9 +15,9 @@ const leadSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-      company_name: {
-        type: String,
-        required: true,
+      branch : {
+        type : String,
+        required : false,
       },
       email: {
         type: String,
