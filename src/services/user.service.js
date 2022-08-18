@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
-const  { sendNewPasswordEmail } = require('./email.service')
+const  { sendNewPasswordEmail,sendEmailWelcome } = require('./email.service')
 
 /**
  * Create a user
@@ -9,9 +9,10 @@ const  { sendNewPasswordEmail } = require('./email.service')
  * @returns {Promise<User>}
  */
 const createUser = async (userBody) => {
-  if (await User.isEmailTaken(userBody.email)) {
+  if ( await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
+  await sendEmailWelcome(userBody.email)
 
   // if (await User.isUserNameTaken(userBody.first_name)) {
   //   throw new ApiError(httpStatus.BAD_REQUEST, 'UserName already taken');
@@ -66,9 +67,11 @@ const updateUserById = async (userId, updateBody) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
 
+
   
   Object.assign(user, updateBody);
   await user.save();
+  
   if(updateBody.hasOwnProperty('password')){
     await sendNewPasswordEmail(user.email,user.email,updateBody.password)
   }

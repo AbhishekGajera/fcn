@@ -2,6 +2,13 @@ const nodemailer = require('nodemailer');
 const config = require('../config/config');
 const logger = require('../config/logger');
 
+// SMTP_SERVICE=gmail
+// SMTP_HOST=smtp.gmail.com
+// SMTP_PORT=587
+// SMTP_USERNAME=fcndashboard@gmail.com
+// SMTP_PASSWORD=Smart@111
+// EMAIL_FROM=fcndashboard@gmail.com
+
 const transport = nodemailer.createTransport(config.email.smtp);
 /* istanbul ignore next */
 if (config.env !== 'test') {
@@ -18,8 +25,8 @@ if (config.env !== 'test') {
  * @param {string} text
  * @returns {Promise}
  */
-const sendEmail = async (to, subject, text) => {
-  const msg = { from: config.email.from, to, subject, text };
+const sendEmail = async (to, subject, text,attachments) => {
+  const msg = { from: config.email.from, to, subject, text,attachments };
   await transport.sendMail(msg);
 };
 
@@ -73,10 +80,25 @@ If you did not create an account, then ignore this email.`;
   await sendEmail(to, subject, text);
 };
 
+const sendEmailWelcome = async (to) => {
+  const subject = 'Welcome To FCN';
+  // replace this url with the link to the email verification page of your front-end app
+  const text = 'Check out this attached pdf file';
+ const  attachments= [{
+    filename: 'welcome_letter.pdf', 
+    path: '../utils/extra/welcome_letter.pdf',
+    contentType: 'application/pdf'
+  }];
+  await sendEmail(to, subject, text,attachments);
+};
+
+
+
 module.exports = {
   transport,
   sendEmail,
   sendResetPasswordEmail,
   sendVerificationEmail,
-  sendNewPasswordEmail
+  sendNewPasswordEmail,
+  sendEmailWelcome
 };

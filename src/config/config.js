@@ -55,6 +55,13 @@ module.exports = {
       service: envVars.SMTP_SERVICE,
       host: envVars.SMTP_HOST,
       port: envVars.SMTP_PORT,
+      secure: true, 
+      tls:{
+        rejectUnAuthorized:true
+    },
+    logger: true,
+    debug: true,
+   
       auth: {
         user: envVars.SMTP_USERNAME,
         pass: envVars.SMTP_PASSWORD,
