@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
 const config = require('../config/config');
 const logger = require('../config/logger');
-
 // SMTP_SERVICE=gmail
 // SMTP_HOST=smtp.gmail.com
 // SMTP_PORT=587
@@ -79,6 +78,9 @@ To verify your email, click on this link: ${verificationEmailUrl}
 If you did not create an account, then ignore this email.`;
   await sendEmail(to, subject, text);
 };
+// const pdf = await generatePDF(`
+      
+//     `);
 
 const sendEmailWelcome = async (to) => {
   const subject = 'Welcome To FCN';
@@ -91,7 +93,7 @@ const sendEmailWelcome = async (to) => {
   }];
   await sendEmail(to, subject, text,attachments);
 };
-
+0
 
 
 module.exports = {
