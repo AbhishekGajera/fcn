@@ -56,9 +56,7 @@ module.exports = {
       host: envVars.SMTP_HOST,
       port: envVars.SMTP_PORT,
       secure: true, 
-      tls:{
-        rejectUnAuthorized:true
-    },
+      tls: { ciphers: 'SSLv3' },
     logger: true,
     debug: true,
    

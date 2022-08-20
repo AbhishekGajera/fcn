@@ -16,7 +16,7 @@ const approveAppoinments = async (leaveBody) => {
 /**
  * Get appoinments by id
  * @param {ObjectId} id
- * @returns {Promise<User>}
+ * @returns {Promise<Appoinmnets>}
  */
  const getAppoinmnetsById = async (id) => {
   return Appoinmnets.findById(id);
@@ -27,10 +27,11 @@ const approveAppoinments = async (leaveBody) => {
  * Update appoinments by id
  * @param {ObjectId} leaveId
  * @param {Object} updateBody
- * @returns {Promise<User>}
+ * @returns {Promise<Appoinmnets>}
  */
  const updateAppoinmnetsById = async (leaveId, updateBody) => {
-  const appoinments = await getAppoinmnetsById(leaveId);
+  const appoinments = await getAppoinmnetsById(updateBody.appoinments_id);
+
   if (!appoinments) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Appoinmnets not found');
   }

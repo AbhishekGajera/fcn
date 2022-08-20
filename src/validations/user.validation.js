@@ -17,6 +17,10 @@ const createUser = {
     bankAccNo: Joi.string(),
     branch : Joi.string(),
     product : Joi.string(),
+    minAmount : Joi.number(),
+    maxAmount : Joi.number(),
+    total_earning : Joi.number(), 
+    product : Joi.string(),
     IBO: Joi.string(),
     role: Joi.string().valid('user', 'admin','IBO','branch'),
     aadhar_card_no: Joi.string(),
@@ -40,7 +44,12 @@ const getUsers = {
     custom: Joi.string(),
     branch: Joi.string().allow('',null),
     IBO: Joi.string().allow('',null),
-    email: Joi.string()
+    email: Joi.string(),
+    minAmount : Joi.number(),
+    maxAmount : Joi.number(),
+    total_earning : Joi.number(), 
+    product : Joi.string(),
+
   }),
 };
 
@@ -66,6 +75,10 @@ const updateUser = {
       address: Joi.string(),
       bankAccNo: Joi.string(),
       branch : Joi.string(),
+      product : Joi.string(),
+    minAmount : Joi.number(),
+    maxAmount : Joi.number(),
+    total_earning : Joi.number(), 
       IBO: Joi.string(),
       role: Joi.string().valid('user', 'admin','IBO','branch'),
       status: Joi.number(),

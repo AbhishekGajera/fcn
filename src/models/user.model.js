@@ -110,9 +110,28 @@ const userSchema = mongoose.Schema(
       type : String,
       required : false,
     },
-    product : {
-      type : String,
+    products : [{
+      product : {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Product',
+        required: true,
+        autopopulate : true
+      },  
+      minAmount : {
+        type : Number,
+        required : true,
+        default : 0
+      },
+      maxAmount : {
+        type : Number,
+        required : true,
+        default : 0
+      }
+    }],
+    total_earning:{
+      type : Number,
       required : false,
+      default : 0
     },
     image : { type : String, required : false },
     status : {

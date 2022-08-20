@@ -57,7 +57,7 @@ const deleteProduct = catchAsync(async (req, res) => {
 });
 
 const productsUpdate = catchAsync(async (req, res) => {
-  const result = await updateProductById(req.body.productId,req.body);
+  const result = await updateProductById(req.fields.productId,req.fields);
   res.send(result);
 });
 

@@ -6,6 +6,7 @@ const addProduct = {
     user: Joi.string().required().custom(objectId),
     category: Joi.string().required(),
     description: Joi.string(),
+    commission : Joi.number(),
     image: Joi.allow(),
     name: Joi.string().required()
   }),

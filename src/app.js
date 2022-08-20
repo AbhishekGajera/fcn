@@ -13,6 +13,7 @@ const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -25,10 +26,10 @@ if (config.env !== 'test') {
 app.use(helmet());
 
 // parse json request body
-app.use(express.json());
+app.use(bodyParser.json({ limit: '50mb' }));
 
 // parse urlencoded request body
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ limit: '50mb',extended: true }));
 
 
 // sanitize request data

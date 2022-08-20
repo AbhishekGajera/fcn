@@ -1,6 +1,60 @@
 const nodemailer = require('nodemailer');
 const config = require('../config/config');
 const logger = require('../config/logger');
+const path = require('path');
+var hummus = require('hummus');
+
+/**
+ * Returns a byteArray string
+ * 
+ * @param {string} str - input string
+ */
+function strToByteArray(str) {
+  var myBuffer = [];
+  var buffer = new Buffer(str);
+  for (var i = 0; i < buffer.length; i++) {
+      myBuffer.push(buffer[i]);
+  }
+  return myBuffer;
+}
+
+let stringD = ''
+
+function replaceText(sourceFile, targetFile, pageNumber, findText, replaceText) {  
+    var writer = hummus.createWriterToModify(sourceFile, {
+        modifiedFilePath: targetFile
+    });
+    var sourceParser = writer.createPDFCopyingContextForModifiedFile().getSourceDocumentParser();
+    var pageObject = sourceParser.parsePage(pageNumber);
+    var textObjectId = pageObject.getDictionary().toJSObject().Contents.getObjectID();
+    var textStream = sourceParser.queryDictionaryObject(pageObject.getDictionary(), 'Contents');
+    //read the original block of text data
+    var data = [];
+    var readStream = sourceParser.startReadingFromStream(textStream);
+    while(readStream.notEnded()){
+        Array.prototype.push.apply(data, readStream.read(10000));
+    }
+    var string = new Buffer(data).toString().replace(findText, replaceText);
+    stringD = string
+
+    //Create and write our new text object
+    var objectsContext = writer.getObjectsContext();
+    objectsContext.startModifiedIndirectObject(textObjectId);
+
+    var stream = objectsContext.startUnfilteredPDFStream();
+    stream.getWriteStream().write(strToByteArray(string));
+    objectsContext.endPDFStream(stream);
+
+    objectsContext.endIndirectObject();
+
+    writer.end();
+    setTimeout(() => {
+      console.info("string++ ",string)
+    }, 10000);
+
+}
+
+// import generatePDF from "../utils/lib/generatePDFs";
 // SMTP_SERVICE=gmail
 // SMTP_HOST=smtp.gmail.com
 // SMTP_PORT=587
@@ -78,19 +132,33 @@ To verify your email, click on this link: ${verificationEmailUrl}
 If you did not create an account, then ignore this email.`;
   await sendEmail(to, subject, text);
 };
-// const pdf = await generatePDF(`
-      
-//     `);
 
-const sendEmailWelcome = async (to) => {
+
+const sendEmailWelcome = async (to,name) => {
   const subject = 'Welcome To FCN';
+  replaceText(path.join(__dirname, '../utils/extra/welcome_letter.pdf'), path.join(__dirname, '../utils/extra/output.pdf'), 0, '[(T)122(o,)]', `[(${name})]`);
+ 
+  const attachments = [
+    {
+        filename: 'welcome_letter.pdf',  
+        path: path.join(__dirname, '../utils/extra/output.pdf')  ,                               
+        contentType: 'application/pdf',
+    }]
+  
+//   const pdf = await generatePDF(`
+// <html> 
+// <head>
+//   <title>Test PDF</title>
+// </head>
+// <body>
+// <h1>gg</h1>
+//    // The contents of our PDF will go here...
+// </body>
+// </html>
+//     `);
   // replace this url with the link to the email verification page of your front-end app
   const text = 'Check out this attached pdf file';
- const  attachments= [{
-    filename: 'welcome_letter.pdf', 
-    path: '../utils/extra/welcome_letter.pdf',
-    contentType: 'application/pdf'
-  }];
+ 
   await sendEmail(to, subject, text,attachments);
 };
 0

@@ -16,7 +16,7 @@ const approveProduct = async (leaveBody) => {
 /**
  * Get product by id
  * @param {ObjectId} id
- * @returns {Promise<User>}
+ * @returns {Promise<Product>}
  */
  const getProductById = async (id) => {
   return Product.findById(id);
@@ -30,7 +30,8 @@ const approveProduct = async (leaveBody) => {
  * @returns {Promise<Product>}
  */
  const updateProductById = async (leaveId, updateBody) => {
-  const product = await getProductById(leaveId);
+  console.log("ud",updateBody)
+  const product = await getProductById(updateBody.productId);
   if (!product) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Product not found');
   }

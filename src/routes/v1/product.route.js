@@ -17,11 +17,11 @@ const upload = multer({ dest: 'images/' });
 router
   .route('/')
   .post(auth(),upload.single('image'), productController.productApprove)
-  .get(auth(), productController.getProducts);
+  .get( productController.getProducts);
 
   router
 .route('/update-product')
-.patch(auth(), productController.productsUpdate)
+.patch( productController.productsUpdate)
 
   router
   .route('/:productId')

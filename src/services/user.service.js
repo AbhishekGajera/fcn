@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { User } = require('../models');
+const { User ,Product } = require('../models');
 const ApiError = require('../utils/ApiError');
 const  { sendNewPasswordEmail,sendEmailWelcome } = require('./email.service')
 
@@ -8,11 +8,44 @@ const  { sendNewPasswordEmail,sendEmailWelcome } = require('./email.service')
  * @param {Object} userBody
  * @returns {Promise<User>}
  */
-const createUser = async (userBody) => {
+const createUser = async (userBody,userId) => {
   if ( await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  await sendEmailWelcome(userBody.email)
+
+  const productDetail = await Product.findById(userBody?.product)
+
+  console.info("minAmount++ ",userBody.minAmount)
+  console.info("productDetail++ ",productDetail.commision)
+  const commision = ((+userBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
+  const ibo = await User.findById(userId);
+  ibo.total_earning = (ibo.total_earning || 0) + commision; 
+  ibo.save();
+
+  const products = [{
+    product : userBody.product,
+    minAmount : userBody.minAmount,
+    maxAmount : userBody.maxAmount
+  }]
+
+  // const user = await User.findById(req.query.user)
+  // if(!user?.products) {
+  //   user.products = []
+  // }
+
+  // user.products.push({
+  //   product : userBody.product,
+  //   minAmount : userBody.minAmount,
+  //   maxAmount : userBody.maxAmount
+  // })
+
+  // user.save()
+
+
+  userBody.products = products
+
+
+  // await sendEmailWelcome(userBody.email,userBody.name)
 
   // if (await User.isUserNameTaken(userBody.first_name)) {
   //   throw new ApiError(httpStatus.BAD_REQUEST, 'UserName already taken');
@@ -66,9 +99,21 @@ const updateUserById = async (userId, updateBody) => {
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
+  const productDetail = await Product.findById(updateBody?.product)
 
+  console.info("minAmount++ ",updateBody.minAmount)
+  console.info("productDetail++ ",productDetail.commision)
+  const commision = ((+updateBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
+  const ibo = await User.findById(userId);
+  ibo.total_earning = (ibo.total_earning || 0) + commision; 
+  ibo.save();
 
-  
+  const products = [{
+    product : updateBody.product,
+    minAmount : updateBody.minAmount,
+    maxAmount : updateBody.maxAmount
+  }]
+  updateBody.products = products
   Object.assign(user, updateBody);
   await user.save();
   

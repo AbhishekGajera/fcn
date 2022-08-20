@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
   category : { type: String, required: true },
   description : { type : String, required : false },
   image : { type : String, required : false },
+  commision : { type : Number, required : true , default : 0 },
   status : { type : String, enum : [0,1], required : false, default : 1 }, // 0 is inactive and 1 is active
   user: {
     type: mongoose.SchemaTypes.ObjectId,
