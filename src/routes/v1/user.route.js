@@ -11,6 +11,10 @@ router
   .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
   .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
 
+  router
+  .route('/product-assign')
+  .patch(auth(), userController.productAssign)
+
 router
   .route('/:userId')
   .get(auth(), validate(userValidation.getUser), userController.getUser)

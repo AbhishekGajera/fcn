@@ -107,8 +107,10 @@ const userSchema = mongoose.Schema(
       required : false,
     },
     IBO : {
-      type : String,
-      required : false,
+      type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User',
+        required: false,
+        autopopulate : true
     },
     products : [{
       product : {

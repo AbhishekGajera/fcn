@@ -23,6 +23,8 @@ router
 .route('/update-product')
 .patch( productController.productsUpdate)
 
+
+
   router
   .route('/:productId')
   .get(auth(),validate(productValidation.deleteProduct), productController.deleteProduct)

@@ -9,18 +9,26 @@ const  { sendNewPasswordEmail,sendEmailWelcome } = require('./email.service')
  * @returns {Promise<User>}
  */
 const createUser = async (userBody,userId) => {
+  console.log("ud",userBody)
   if ( await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
 
   const productDetail = await Product.findById(userBody?.product)
-
-  console.info("minAmount++ ",userBody.minAmount)
-  console.info("productDetail++ ",productDetail.commision)
   const commision = ((+userBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
-  const ibo = await User.findById(userId);
+  console.log("cms",commision);
+  let Id = userId
+  if(userBody?.IBO){
+    Id = userBody?.IBO
+  }
+  const ibo = await User.findById(Id);
+  if(!ibo.total_earning) {
+    ibo.total_earning = 0
+  }
   ibo.total_earning = (ibo.total_earning || 0) + commision; 
   ibo.save();
+  console.info("ibo++ ",ibo)
+
 
   const products = [{
     product : userBody.product,
@@ -99,21 +107,21 @@ const updateUserById = async (userId, updateBody) => {
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  const productDetail = await Product.findById(updateBody?.product)
+  // const productDetail = await Product.findById(updateBody?.product)
 
-  console.info("minAmount++ ",updateBody.minAmount)
-  console.info("productDetail++ ",productDetail.commision)
-  const commision = ((+updateBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
-  const ibo = await User.findById(userId);
-  ibo.total_earning = (ibo.total_earning || 0) + commision; 
-  ibo.save();
+  // console.info("minAmount++ ",updateBody.minAmount)
+  // console.info("productDetail++ ",productDetail.commision)
+  // const commision = ((+updateBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
+  // const ibo = await User.findById(userId);
+  // ibo.total_earning = (ibo.total_earning || 0) + commision; 
+  // ibo.save();
 
-  const products = [{
-    product : updateBody.product,
-    minAmount : updateBody.minAmount,
-    maxAmount : updateBody.maxAmount
-  }]
-  updateBody.products = products
+  // const products = [{
+  //   product : updateBody.product,
+  //   minAmount : updateBody.minAmount,
+  //   maxAmount : updateBody.maxAmount
+  // }]
+  // updateBody.products = products
   Object.assign(user, updateBody);
   await user.save();
   
@@ -122,6 +130,60 @@ const updateUserById = async (userId, updateBody) => {
   }
   return user;
 };
+
+const updateProductAssign = async (userId, updateBody,UId) => {
+  const user = await getUserById(userId);
+
+  let Id = UId;
+  if(user?.IBO) {
+    Id = user?.IBO
+  }
+
+  const reqUser = await getUserById(UId)
+ 
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  }
+
+   
+
+  const productDetail = await Product.findById(updateBody?.product)
+  
+
+  
+  const commision = ((+updateBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
+  reqUser.total_earning = (reqUser.total_earning || 0) + commision; 
+  console.log("ttl",reqUser.total_earning)
+  reqUser.save()
+  
+  user.products.push(
+    {
+      product : updateBody.product,
+    minAmount : updateBody.minAmount,
+    maxAmount : updateBody.maxAmount
+    }
+  )
+
+  
+
+  // const products = [{
+  //   product : updateBody.product,
+  //   minAmount : updateBody.minAmount,
+  //   maxAmount : updateBody.maxAmount
+  // }]
+  // updateBody.products = products
+  Object.assign(user, updateBody);
+  await user.save();
+  
+  if(updateBody.hasOwnProperty('password')){
+    await sendNewPasswordEmail(user.email,user.email,updateBody.password)
+  }
+  return user;
+};
+
 
 /**
  * Delete user by id
@@ -144,4 +206,5 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  updateProductAssign
 };

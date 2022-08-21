@@ -10,6 +10,8 @@ const createUser = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(user);
 });
 
+
+
 const getUsers = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
@@ -30,6 +32,11 @@ const updateUser = catchAsync(async (req, res) => {
   res.send(user);
 });
 
+const productAssign = catchAsync(async (req, res) => {
+  const user = await userService.updateProductAssign(req.body.userId, req.body,req.user.id);
+  res.send(user);
+});
+
 const deleteUser = catchAsync(async (req, res) => {
   await userService.deleteUserById(req.params.userId);
   res.status(httpStatus.NO_CONTENT).send();
@@ -41,4 +48,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  productAssign
 };
