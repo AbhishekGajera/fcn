@@ -18,7 +18,8 @@ const leadUpdate = catchAsync(async (req, res) => {
 });
 
 const leadDelete = catchAsync(async (req, res) => {
-  await deleteLeadById(req.params.lead_id);
+  console.log("led",req.body.lead_id)
+  await deleteLeadById(req.body.lead_id);
   res.status(httpStatus.NO_CONTENT).send();
 });
 

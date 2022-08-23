@@ -53,11 +53,9 @@ const createUser = async (userBody,userId) => {
   userBody.products = products
 
 
-  // await sendEmailWelcome(userBody.email,userBody.name)
+  await sendEmailWelcome(userBody.email,userBody.name)
 
-  // if (await User.isUserNameTaken(userBody.first_name)) {
-  //   throw new ApiError(httpStatus.BAD_REQUEST, 'UserName already taken');
-  // }
+  
   return User.create(userBody);
 };
 
