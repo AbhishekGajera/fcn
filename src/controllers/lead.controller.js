@@ -8,6 +8,7 @@ const pick = require('../utils/pick');
 
 
 const leadAdd = catchAsync(async (req, res) => {
+  
   const result = await approveLead(req.body);
   res.status(httpStatus.CREATED).send(result);
 });
@@ -18,12 +19,14 @@ const leadUpdate = catchAsync(async (req, res) => {
 });
 
 const leadDelete = catchAsync(async (req, res) => {
-  console.log("led",req.body.lead_id)
-  await deleteLeadById(req.body.lead_id);
+  
+  await deleteLeadById(req.params.leadId);
   res.status(httpStatus.NO_CONTENT).send();
 });
 
 const getLeads = catchAsync(async (req, res) => {
+  console.info("das",req)
+
   const filter = pick(req.query, ['name']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await getLeadList(filter, options);

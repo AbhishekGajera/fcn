@@ -13,7 +13,7 @@ router
 
 
 router.post('/update-lead', validate(leadValidation.updateLeave), leadController.leadUpdate);
-router.delete('/delete-lead', validate(leadValidation.deleteLeave), leadController.leadDelete);
+router.delete('/delete-lead/:leadId', validate(leadValidation.deleteLeave), leadController.leadDelete);
 router.get('/get-lead', leadController.getLeads);
 
 module.exports = router;
