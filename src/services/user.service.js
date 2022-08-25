@@ -15,11 +15,11 @@ const createUser = async (userBody,userId) => {
   }
 
   const productDetail = await Product.findById(userBody?.product)
+  if(userBody.minAmount){}
   const commision = ((+userBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
-  console.log("cms",commision);
   let Id = userId
   if(userBody?.IBO){
-    Id = userBody?.IBO
+    Id = userBody?.IBO  
   }
   const ibo = await User.findById(Id);
   if(!ibo.total_earning) {
