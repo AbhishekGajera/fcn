@@ -10,24 +10,32 @@ const  { sendNewPasswordEmail,sendEmailWelcome } = require('./email.service')
  */
 const createUser = async (userBody,userId) => {
   console.log("ud",userBody)
+  userBody.name = userBody.first_name +' '+ userBody.last_name;
   if ( await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
 
   const productDetail = await Product.findById(userBody?.product)
-  if(userBody.minAmount){}
-  const commision = ((+userBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
+  let commision = 0;
+  if(productDetail){
+    commision = ((+userBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
+  }
+  
   let Id = userId
   if(userBody?.IBO){
     Id = userBody?.IBO  
   }
   const ibo = await User.findById(Id);
-  if(!ibo.total_earning) {
-    ibo.total_earning = 0
+  if(ibo){
+    
+    console.log("ibo",ibo);
+    if(!ibo?.total_earning) {
+      ibo.total_earning = 0
+    }
+    ibo.total_earning = (ibo?.total_earning || 0) + commision; 
+    ibo.save();
+    console.info("ibo++ ",ibo)
   }
-  ibo.total_earning = (ibo.total_earning || 0) + commision; 
-  ibo.save();
-  console.info("ibo++ ",ibo)
 
 
   const products = [{

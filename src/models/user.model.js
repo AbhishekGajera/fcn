@@ -116,17 +116,17 @@ const userSchema = mongoose.Schema(
       product : {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'Product',
-        required: true,
+        required: false,
         autopopulate : true
       },  
       minAmount : {
         type : Number,
-        required : true,
+        required : false,
         default : 0
       },
       maxAmount : {
         type : Number,
-        required : true,
+        required : false,
         default : 0
       }
     }],

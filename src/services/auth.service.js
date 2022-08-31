@@ -13,6 +13,11 @@ const { tokenTypes } = require('../config/tokens');
  */
 const loginUserWithEmailAndPassword = async (email, password) => {
   const user = await userService.getUserByEmail(email);
+
+  if(user?.status === 1) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'You are blocked');
+  }
+
   if (user && user.registrationType === 'google' && password !== process.env.COMMON_GOOGLE_PASSWORD) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'it seems like you have registered using google,please try to login with google');
   }
