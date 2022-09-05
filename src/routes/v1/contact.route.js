@@ -10,9 +10,16 @@ router
 .route('/add-contact')
 .post(contactController.contactAdd)
 
+
+// getConnectedById
+
 router
 .route('/fetch-contact')
 .get(contactController.getContacts)
+
+router
+.route('/get-connected-id/:id')
+.get(contactController.getConnectId)
 
 
 

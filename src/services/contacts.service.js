@@ -11,6 +11,10 @@ const addContact = async (leaveBody) => {
   return Contact.create(leaveBody);
 };
 
+const getConnectedById = async (id) => {
+  return Contact.findById(id);
+};
+
 
 
 /**
@@ -29,5 +33,6 @@ const addContact = async (leaveBody) => {
 
 module.exports = {
     addContact,
+    getConnectedById,
   getContactList
 };
