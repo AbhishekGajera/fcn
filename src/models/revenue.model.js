@@ -29,10 +29,6 @@ const revenueSchema = new mongoose.Schema({
         required: true,
         autopopulate: true,
       },
-      earning_from: {
-        type: String,
-        required: true,
-      },
       total_revenue: {
         type: Number,
         required: true,
