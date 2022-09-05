@@ -26,6 +26,11 @@ const transactionSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  status : {
+    type : Number,
+    enum : [0,1,2], // 0 is pending, 1 is approved, 2 is declined
+    default : 0
+  },
  
 },
 {

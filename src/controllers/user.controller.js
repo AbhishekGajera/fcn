@@ -5,14 +5,20 @@ const catchAsync = require('../utils/catchAsync');
 const { userService } = require('../services');
 
 const createUser = catchAsync(async (req, res) => {
-  console.info(req.user.id)
   const user = await userService.createUser(req.body,req.user.id);
+  console.info(req.user.id)
   res.status(httpStatus.CREATED).send(user);
 });
 
 
 
 const getUsers = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await userService.queryUsers(filter, options);
+  res.send(result);
+});
+const getUsersByBranch = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await userService.queryUsers(filter, options);
@@ -45,6 +51,7 @@ const deleteUser = catchAsync(async (req, res) => {
 module.exports = {
   createUser,
   getUsers,
+  getUsersByBranch,
   getUser,
   updateUser,
   deleteUser,

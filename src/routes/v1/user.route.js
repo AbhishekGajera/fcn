@@ -10,8 +10,11 @@ router
   .route('/')
   .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
   .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
+router
+  .route('/get-user-branch')
+  .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsersByBranch);
 
-  router
+router
   .route('/product-assign')
   .patch(auth(), userController.productAssign)
 

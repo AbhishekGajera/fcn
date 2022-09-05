@@ -9,6 +9,9 @@ const targetRoute = require('./target.route');
 const contactRoute = require('./contact.route');
 const revenueRoute = require('./revenues.route');
 const leadsRoute = require('./leads.route');
+const videoRoute = require('./video.route');
+const transactionRoute = require('./transaction.route');
+
 
 
 
@@ -57,6 +60,14 @@ const defaultRoutes = [
   {
     path: '/leads',
     route: leadsRoute,
+  },
+  {
+    path: '/video',
+    route: videoRoute,
+  },
+  {
+    path: '/transaction',
+    route: transactionRoute,
   },
 ];
 

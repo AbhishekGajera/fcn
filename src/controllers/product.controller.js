@@ -6,16 +6,16 @@ const formidable = require('formidable');
 const path = require('path')
 const fs = require('fs');
 const uploadToCloudinary = require('../utils/uploadToCloudnary');
+const mv = require('mv');
 
 const productApprove = catchAsync(async (req, res) => {
   const form = formidable.IncomingForm();
   const uploadFolder = path.join(__dirname, '../../files');
 
   form.multiples = true;
-  form.maxFileSize = 50 * 1024 * 1024; // 5MB
+  form.maxFileSize = 5 * 1024 * 1024; // 5MB
   form.uploadDir = uploadFolder;
-  console.info(req?.file)
-  console.info(req?.files)
+  console.info("resss",req?.files)
 
   // Check if multiple files or a single file
   if (!req?.files?.length) {
@@ -25,15 +25,17 @@ const productApprove = catchAsync(async (req, res) => {
 
     // creates a valid name by removing spaces
     const fileName = encodeURIComponent(file?.name?.replace(/\s/g, '-'));
+    console.log("fl",fileName)
 
-    try {
-      // renames the file in the directory
-      fs.renameSync((file?.path || ''), (uploadFolder + '/' + fileName));
-      const result = await uploadToCloudinary(uploadFolder + '/' + fileName,'products')
-      req.fields.image = result.url
-    } catch (error) {
-      console.error(error)
-    }
+    // try {
+    //   // renames the file in the directory
+    //   fs.renameSync((file?.path || ''), (uploadFolder + '/' + fileName));
+    //   const result = await uploadToCloudinary(uploadFolder + '/' + fileName,'products')
+    //   console.log("rs",result)
+    //   req.fields.image = result.url
+    // } catch (error) {
+    //   console.error(error)
+    // }
   }
 
   const result = await approveProduct(req.fields);
