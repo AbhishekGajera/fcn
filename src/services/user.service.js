@@ -114,21 +114,7 @@ const updateUserById = async (userId, updateBody) => {
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  // const productDetail = await Product.findById(updateBody?.product)
-
-  // console.info("minAmount++ ",updateBody.minAmount)
-  // console.info("productDetail++ ",productDetail.commision)
-  // const commision = ((+updateBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
-  // const ibo = await User.findById(userId);
-  // ibo.total_earning = (ibo.total_earning || 0) + commision; 
-  // ibo.save();
-
-  // const products = [{
-  //   product : updateBody.product,
-  //   minAmount : updateBody.minAmount,
-  //   maxAmount : updateBody.maxAmount
-  // }]
-  // updateBody.products = products
+  
   Object.assign(user, updateBody);
   await user.save();
   
