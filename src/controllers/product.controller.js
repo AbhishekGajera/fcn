@@ -44,7 +44,7 @@ const productApprove = catchAsync(async (req, res) => {
 
 const getProducts = catchAsync(async (req, res) => {
   
-  const filter = pick(req.query, ['name','status']);
+  const filter = pick(req.query, ['name','status','category','commision','description']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await getProductsList(filter, options);
   res.send(result);
