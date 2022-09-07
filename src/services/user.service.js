@@ -28,13 +28,11 @@ const createUser = async (userBody,userId) => {
   const ibo = await User.findById(Id);
   if(ibo){
     
-    console.log("ibo",ibo);
     if(!ibo?.total_earning) {
       ibo.total_earning = 0
     }
     ibo.total_earning = (ibo?.total_earning || 0) + commision; 
     ibo.save();
-    console.info("ibo++ ",ibo)
   }
 
 
@@ -61,8 +59,11 @@ const createUser = async (userBody,userId) => {
   userBody.products = products
 
 
+try {
   await sendEmailWelcome(userBody.email,userBody.name)
-
+} catch (error) {
+  console.info(error)
+}
   
   return User.create(userBody);
 };

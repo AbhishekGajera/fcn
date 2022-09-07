@@ -11,7 +11,8 @@ const userSchema = mongoose.Schema(
       type: String,
       required: false,
       trim: true,
-      unique: true
+      unique: true,
+      default : this.first_name + ' ' + this.last_name
     },
     first_name: {
       type: String,

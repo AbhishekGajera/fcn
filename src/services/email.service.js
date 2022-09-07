@@ -21,9 +21,11 @@ function strToByteArray(str) {
 let stringD = ''
 
 function replaceText(sourceFile, targetFile, pageNumber, findText, replaceText) {  
+  console.info("sourceFile++ ",sourceFile,targetFile)
     var writer = hummus.createWriterToModify(sourceFile, {
         modifiedFilePath: targetFile
     });
+    console.info("writer++ ",writer)
     var sourceParser = writer.createPDFCopyingContextForModifiedFile().getSourceDocumentParser();
     var pageObject = sourceParser.parsePage(pageNumber);
     var textObjectId = pageObject.getDictionary().toJSObject().Contents.getObjectID();
@@ -35,6 +37,7 @@ function replaceText(sourceFile, targetFile, pageNumber, findText, replaceText) 
         Array.prototype.push.apply(data, readStream.read(10000));
     }
     var string = new Buffer(data).toString().replace(findText, replaceText);
+    console.info(string)
     stringD = string
 
     //Create and write our new text object
