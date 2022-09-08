@@ -24,7 +24,7 @@ const getUsersByBranch = catchAsync(async (req, res) => {
 });
 
 const getUsersByIbo = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name']);
+  const filter = pick(req.query, ['name','role']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await userService.getUserByIbos(req.params.id);
   res.send(result);
