@@ -19,7 +19,7 @@ const upload = multer({ dest: 'images/' });
 
 router
   .route('/')
-  .post(auth(),upload.single('image'), videoController.videoApprove)
+  .post(auth(),upload.single('video'), videoController.videoApprove)
   .get( videoController.getVideo);
 
   router

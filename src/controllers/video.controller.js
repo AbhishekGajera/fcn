@@ -8,6 +8,8 @@ const pick = require('../utils/pick');
 const formidable = require('formidable');
 const path = require('path')
 const fs = require('fs');
+const mv = require('mv');
+
 const uploadToCloudinary = require('../utils/uploadToCloudnary');
 
 const videoApprove = catchAsync(async (req, res) => {
@@ -15,32 +17,39 @@ const videoApprove = catchAsync(async (req, res) => {
   const uploadFolder = path.join(__dirname, '../../files');
 
   form.multiples = true;
-  form.maxFileSize = 300 * 1024 * 1024; // 5MB
+  form.maxFileSize = 5000 * 1024 * 1024; // 5MB
   form.uploadDir = uploadFolder;
-  console.info(req?.file)
-  console.info(req?.files)
+  console.info("rf",req?.file)
+  console.info("rfc",req?.files)
 
   // Check if multiple files or a single file
   if (!req?.files?.length) {
     //Single file
 
-    const file = req?.files?.image;
+    const file = req?.files?.url;
 
     // creates a valid name by removing spaces
     const fileName = encodeURIComponent(file?.name?.replace(/\s/g, '-'));
 
     try {
-      // renames the file in the directory
-      fs.renameSync((file?.path || ''), (uploadFolder + '/' + fileName));
-      const result = await uploadToCloudinary(uploadFolder + '/' + fileName,'products')
-      req.fields.image = result.url
+      mv(file?.path, uploadFolder + '/' + fileName, async function (err) {
+        const result = await uploadToCloudinary(uploadFolder + '/' + fileName, 'products')
+        console.log("rf",result.url)
+        req.fields.url = result.url;
+        
+
+
+        const data = await addVideo(req.fields);
+        res.status(httpStatus.CREATED).send(data);
+      });
+
+      
     } catch (error) {
       console.error(error)
     }
   }
 
-  const result = await addVideo(req.fields);
-  res.status(httpStatus.CREATED).send(result);
+
 });
 
 const getVideo = catchAsync(async (req, res) => {
