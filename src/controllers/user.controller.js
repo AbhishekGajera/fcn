@@ -23,6 +23,12 @@ const getUsersByBranch = catchAsync(async (req, res) => {
   res.send(result);
 });
 
+const getUsersByIbo = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['name']);
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await userService.getUserByIbos(req.params.id);
+  res.send(result);
+});
 const getUser = catchAsync(async (req, res) => {
   const user = await userService.getUserById(req.params.userId);
   if (!user) {
@@ -50,6 +56,7 @@ module.exports = {
   createUser,
   getUsers,
   getUsersByBranch,
+  getUsersByIbo,
   getUser,
   updateUser,
   deleteUser,

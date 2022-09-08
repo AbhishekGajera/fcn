@@ -13,6 +13,9 @@ router
 router
   .route('/get-user-branch')
   .get(auth(), validate(userValidation.getUsers), userController.getUsersByBranch);
+  router
+  .route('/get-user-ibo/:id')
+  .get(auth(), validate(userValidation.getUsers), userController.getUsersByIbo);
 
 router
   .route('/product-assign')

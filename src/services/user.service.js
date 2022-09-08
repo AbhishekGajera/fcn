@@ -82,6 +82,11 @@ const queryUsers = async (filter, options) => {
   return users;
 };
 
+const getUserByIbos = async (id) => {
+  return User.findOne({ IBO:id });
+};
+
+
 /**
  * Get user by id
  * @param {ObjectId} id
@@ -197,6 +202,7 @@ module.exports = {
   createUser,
   queryUsers,
   getUserById,
+  getUserByIbos,
   getUserByEmail,
   updateUserById,
   deleteUserById,
