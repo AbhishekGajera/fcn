@@ -5,7 +5,7 @@ const pick = require('../utils/pick');
 const formidable = require('formidable');
 const path = require('path')
 const fs = require('fs');
-const uploadToCloudinary = require('../utils/uploadToCloudnary');
+const {uploadToCloudinary} = require('../utils/uploadToCloudnary');
 const mv = require('mv');
 
 const productApprove = catchAsync(async (req, res) => {
@@ -32,6 +32,7 @@ const productApprove = catchAsync(async (req, res) => {
     try {
       mv(file?.path, uploadFolder + '/' + fileName, async function (err) {
         const result = await uploadToCloudinary(uploadFolder + '/' + fileName, 'products')
+        console.log("rs", result)
 
         req.fields.image = result.url
 
