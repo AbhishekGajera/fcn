@@ -16,6 +16,9 @@ router
   router
   .route('/get-user-ibo/:id')
   .get(auth(), validate(userValidation.getUsers), userController.getUsersByIbo);
+  router
+  .route('/get-product-client/:clientId')
+  .get(auth(), validate(userValidation.getUsers), userController.getProductClient);  
 
 router
   .route('/product-assign')

@@ -86,6 +86,13 @@ const getUserByIbos = async (id) => {
   return User.findOne({ IBO:id });
 };
 
+const getProductById = async (id) => {
+  const usr = User.findById(id,'products');
+  
+  return usr
+  // return usr.products;
+};
+
 
 /**
  * Get user by id
@@ -203,6 +210,7 @@ module.exports = {
   queryUsers,
   getUserById,
   getUserByIbos,
+  getProductById,
   getUserByEmail,
   updateUserById,
   deleteUserById,

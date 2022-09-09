@@ -36,6 +36,14 @@ const getUser = catchAsync(async (req, res) => {
   }
   res.send(user);
 });
+const getProductClient = catchAsync(async (req, res) => {
+  const user = await userService.getProductById(req.params.clientId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  res.send(user);
+});
+
 
 const updateUser = catchAsync(async (req, res) => {
   const user = await userService.updateUserById(req.params.userId, req.body);
@@ -57,6 +65,7 @@ module.exports = {
   getUsers,
   getUsersByBranch,
   getUsersByIbo,
+  getProductClient,
   getUser,
   updateUser,
   deleteUser,
