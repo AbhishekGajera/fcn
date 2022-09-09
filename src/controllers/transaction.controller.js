@@ -3,6 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const {  addTransaction,
     updateTransactionById,
     deleteTransactionById,
+    getTransactionUser,
     getTransactionList } = require('../services/transaction.service');
 const pick = require('../utils/pick');
 
@@ -29,9 +30,16 @@ const getTransaction = catchAsync(async (req, res) => {
   res.send(result);
 });
 
+const getTransactionByUser = catchAsync(async (req, res) => {
+  
+  const result = await getTransactionUser(req.params.Transid);
+  res.send(result);
+});
+
 module.exports = {
   transactionAdd,
   transactionUpdate,
   transactionDelete,
-  getTransaction
+  getTransaction,
+  getTransactionByUser
 };

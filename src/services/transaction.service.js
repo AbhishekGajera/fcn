@@ -77,10 +77,29 @@ const addTransaction = async (leaveBody) => {
 };
 
 
+const getTransactionUser = async (id) => {
+  const transaction = await Transaction.find({
+    $or: [
+      {
+        from_user: id ,
+      },
+      {
+        to_user: id ,
+      }
+    ],
+  });
+  if (!transaction) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'transaction not found');
+  }
+  return transaction;
+ };
+ 
+
 
 module.exports = {
   addTransaction,
   updateTransactionById,
   deleteTransactionById,
-  getTransactionList
+  getTransactionList,
+  getTransactionUser
 };

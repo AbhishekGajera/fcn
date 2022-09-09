@@ -18,6 +18,10 @@ router
 .get(auth(),transactionController.getTransaction)
 
 router
+.route('/get-transaction-user/:Transid')
+.get(transactionController.getTransactionByUser)
+
+router
 .route('/update-transaction')
 .patch(transactionController.transactionUpdate)
 
