@@ -45,6 +45,17 @@ const getProductClient = catchAsync(async (req, res) => {
 });
 
 
+const getTotalInvest = catchAsync(async (req, res) => {
+  const user = await userService.getTotalById(req.params.usrId);
+  console.log("us0",user.product)
+
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  res.send(user);
+});
+
+
 const updateUser = catchAsync(async (req, res) => {
   const user = await userService.updateUserById(req.params.userId, req.body);
   res.send(user);
@@ -66,6 +77,7 @@ module.exports = {
   getUsersByBranch,
   getUsersByIbo,
   getProductClient,
+  getTotalInvest,
   getUser,
   updateUser,
   deleteUser,

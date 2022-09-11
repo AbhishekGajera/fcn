@@ -93,6 +93,12 @@ const getProductById = async (id) => {
   // return usr.products;
 };
 
+const getTotalById = async (id) => {
+  const usr = User.findById(id,'products');
+  
+  return usr
+  // return usr.products;
+};
 
 /**
  * Get user by id
@@ -211,6 +217,7 @@ module.exports = {
   getUserById,
   getUserByIbos,
   getProductById,
+  getTotalById,
   getUserByEmail,
   updateUserById,
   deleteUserById,

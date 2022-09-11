@@ -137,6 +137,7 @@ const userSchema = mongoose.Schema(
       default : 0
     },
     image : { type : String, required : false },
+
     status : {
       type : Number,
       enum : [0,1,2], // 0 is Active, 1 is inActive, 2 is Terminate

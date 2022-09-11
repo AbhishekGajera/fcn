@@ -18,7 +18,10 @@ router
   .get(auth(), validate(userValidation.getUsers), userController.getUsersByIbo);
   router
   .route('/get-product-client/:clientId')
-  .get(auth(), validate(userValidation.getUsers), userController.getProductClient);  
+  .get(auth(), validate(userValidation.getUsers), userController.getProductClient); 
+  router
+  .route('/get-invest-user/:usrId')
+  .get(auth(), validate(userValidation.getUsers), userController.getTotalInvest);   
 
 router
   .route('/product-assign')
