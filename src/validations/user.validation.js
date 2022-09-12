@@ -9,8 +9,7 @@ const createUser = {
     first_name: Joi.string(),
     last_name: Joi.string(),
     image: Joi.allow(),
-    avatar: Joi.allow(),
-
+    avatar: Joi.string(),
     dob: Joi.string().required(),
     contactno: Joi.string().required(),
     country: Joi.string(),
@@ -77,6 +76,7 @@ const updateUser = {
       bankIfscCode: Joi.string(),
       address: Joi.string(),
       bankAccNo: Joi.string(),
+      avatar: Joi.string(),
       branch : Joi.string(),
       selectProduct : Joi.string(),
       product : Joi.string(),
