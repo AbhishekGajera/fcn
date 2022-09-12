@@ -9,6 +9,8 @@ const createUser = {
     first_name: Joi.string(),
     last_name: Joi.string(),
     image: Joi.allow(),
+    avatar: Joi.allow(),
+
     dob: Joi.string().required(),
     contactno: Joi.string().required(),
     country: Joi.string(),

@@ -76,6 +76,10 @@ const userSchema = mongoose.Schema(
    image : { 
     type : String, required : false
    },
+   avatar : { 
+    type : String, required : false
+   },
+   
     country : {
       type : String,
       required : true,
