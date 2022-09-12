@@ -102,7 +102,7 @@ const userSchema = mongoose.Schema(
       type : Number,
       required : false,
     },
-    
+
     branch : {
       type : String,
       required : false,
@@ -114,12 +114,14 @@ const userSchema = mongoose.Schema(
         autopopulate : true
     },
     products : [{
+      
       product : {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'Product',
         required: false,
         autopopulate : true
-      },  
+      },
+        
       minAmount : {
         type : Number,
         required : false,

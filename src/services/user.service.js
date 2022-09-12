@@ -87,7 +87,7 @@ const getUserByIbos = async (id) => {
 };
 
 const getProductById = async (id) => {
-  const usr = User.findById(id,'products');
+  const usr = User.findById(id,'products').populate('products.product');
   
   return usr
   // return usr.products;
