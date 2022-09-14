@@ -8,7 +8,7 @@ const register = {
     name: Joi.string(),
     first_name: Joi.string(),
     last_name: Joi.string(),
-   
+       avatar: Joi.string(),
     dob: Joi.string().required(),
     contactno: Joi.string().required(),
     country: Joi.string().required(),
