@@ -24,7 +24,7 @@ const transactionDelete = catchAsync(async (req, res) => {
 });
 
 const getTransaction = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', 'role','user']);
+  const filter = pick(req.query, ['name', 'role','user','status']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await getTransactionList(filter, options);
   res.send(result);
