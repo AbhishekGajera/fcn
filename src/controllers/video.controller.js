@@ -10,11 +10,7 @@ const path = require('path')
 const fs = require('fs');
 const mv = require('mv');
 
-<<<<<<< Updated upstream
-const {uploadToCloudinaryVideo} = require("../utils/uploadToCloudnary")
-=======
-const uploadToCloudinary = require('../utils/uploadToCloudnary');
->>>>>>> Stashed changes
+const {uploadToCloudinary} = require('../utils/uploadToCloudnary');
 
 const videoApprove = catchAsync(async (req, res) => {
   const form = formidable.IncomingForm();
@@ -23,10 +19,7 @@ const videoApprove = catchAsync(async (req, res) => {
   form.multiples = true;
   form.maxFileSize = 5000 * 1024 * 1024; // 5MB
   form.uploadDir = uploadFolder;
-<<<<<<< Updated upstream
-=======
   console.info("rf",req?.file)
->>>>>>> Stashed changes
   console.info("rfc",req?.files)
 
   // Check if multiple files or a single file
@@ -37,19 +30,13 @@ const videoApprove = catchAsync(async (req, res) => {
 
     // creates a valid name by removing spaces
     const fileName = encodeURIComponent(file?.name?.replace(/\s/g, '-'));
+    console.log("fl",fileName)
+
 
     try {
-<<<<<<< Updated upstream
-     
-      
-      mv(file?.path, uploadFolder + '/' + fileName, async function (err) {
-        const result = await uploadToCloudinaryVideo(uploadFolder + '/' + fileName, 'products')
-        console.log("rf",result)
-=======
       mv(file?.path, uploadFolder + '/' + fileName, async function (err) {
         const result = await uploadToCloudinary(uploadFolder + '/' + fileName, 'products')
         console.log("rf",result.url)
->>>>>>> Stashed changes
         req.fields.url = result.url;
         
 

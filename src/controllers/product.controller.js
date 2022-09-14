@@ -32,10 +32,7 @@ const productApprove = catchAsync(async (req, res) => {
     try {
       mv(file?.path, uploadFolder + '/' + fileName, async function (err) {
         const result = await uploadToCloudinary(uploadFolder + '/' + fileName, 'products')
-<<<<<<< Updated upstream
         console.log("rs", result)
-=======
->>>>>>> Stashed changes
 
         req.fields.image = result.url
 
