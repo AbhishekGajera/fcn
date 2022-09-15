@@ -9,8 +9,7 @@ const  { sendNewPasswordEmail,sendEmailWelcome } = require('./email.service')
  * @returns {Promise<User>}
  */
 const createUser = async (userBody,userId) => {
-  console.log("ud",userBody)
-  userBody.name = userBody.first_name +' '+ userBody.last_name;
+ 
   if ( await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
@@ -83,7 +82,7 @@ const queryUsers = async (filter, options) => {
 };
 
 const getUserByIbos = async (id) => {
-  return User.findOne({ IBO:id });
+  return User.find({ IBO:id });
 };
 
 const getProductById = async (id) => {

@@ -10,7 +10,7 @@ const path = require('path')
 const fs = require('fs');
 const mv = require('mv');
 
-const {uploadToCloudinary} = require('../utils/uploadToCloudnary');
+const {uploadToCloudinaryVideo} = require('../utils/uploadToCloudnary');
 
 const videoApprove = catchAsync(async (req, res) => {
   const form = formidable.IncomingForm();
@@ -35,7 +35,7 @@ const videoApprove = catchAsync(async (req, res) => {
 
     try {
       mv(file?.path, uploadFolder + '/' + fileName, async function (err) {
-        const result = await uploadToCloudinary(uploadFolder + '/' + fileName, 'products')
+        const result = await uploadToCloudinaryVideo(uploadFolder + '/' + fileName, 'products')
         console.log("rf",result.url)
         req.fields.url = result.url;
         

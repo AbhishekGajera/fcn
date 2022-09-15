@@ -87,6 +87,7 @@ const getTransactionUser = async (id) => {
         to_user: id ,
       }
     ],
+    status : 0
   });
   if (!transaction) {
     throw new ApiError(httpStatus.NOT_FOUND, 'transaction not found');
@@ -94,6 +95,14 @@ const getTransactionUser = async (id) => {
   return transaction;
  };
  
+ const getTransactionBranch = async (filter,options) => {
+ 
+  const transaction = await Transaction.paginate(filter, options);
+  if (!transaction) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'transaction not found');
+  }
+  return transaction;
+ };
 
 
 module.exports = {
@@ -101,5 +110,6 @@ module.exports = {
   updateTransactionById,
   deleteTransactionById,
   getTransactionList,
-  getTransactionUser
+  getTransactionUser,
+  getTransactionBranch
 };

@@ -22,6 +22,10 @@ router
 .get(transactionController.getTransactionByUser)
 
 router
+.route('/get-transaction-branch')
+.get(transactionController.getTransactionByBranch)
+
+router
 .route('/update-transaction')
 .patch(transactionController.transactionUpdate)
 

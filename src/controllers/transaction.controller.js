@@ -4,6 +4,7 @@ const {  addTransaction,
     updateTransactionById,
     deleteTransactionById,
     getTransactionUser,
+    getTransactionBranch,
     getTransactionList } = require('../services/transaction.service');
 const pick = require('../utils/pick');
 
@@ -33,6 +34,12 @@ const getTransaction = catchAsync(async (req, res) => {
 const getTransactionByUser = catchAsync(async (req, res) => {
   
   const result = await getTransactionUser(req.params.Transid);
+  res.send({ results : result  });
+});
+const getTransactionByBranch = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['role','to_user']);
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await getTransactionBranch(filter,options);
   res.send(result);
 });
 
@@ -41,5 +48,6 @@ module.exports = {
   transactionUpdate,
   transactionDelete,
   getTransaction,
-  getTransactionByUser
+  getTransactionByUser,
+  getTransactionByBranch
 };

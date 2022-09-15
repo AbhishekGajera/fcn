@@ -10,6 +10,10 @@ const transactionSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  role: {
+    type: String,
+    required: false
+  },
   from_user: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'User',
