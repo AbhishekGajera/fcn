@@ -12,35 +12,35 @@ const leadSchema = new mongoose.Schema(
       required: true,
     },
     title: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
+    },
+    branch: {
+      type: String,
+      required: false,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error('Invalid email');
+        }
       },
-      branch : {
-        type : String,
-        required : false,
-      },
-      email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        lowercase: true,
-        validate(value) {
-          if (!validator.isEmail(value)) {
-            throw new Error('Invalid email');
-          }
-        },
-      },
+    },
     contactno: {
-        type : Number,
-        required : true
-      },
-   
-    status : {
-        type : Number,
-        enum : [0,1], // 0 is New, 1 is Working
-        default : 0
-      },
+      type: Number,
+      required: true
+    },
+
+    status: {
+      type: Number,
+      enum: [0, 1], // 0 is New, 1 is Working
+      default: 0
+    },
   },
   { timestamps: true }
 );

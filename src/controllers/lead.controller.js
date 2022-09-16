@@ -25,9 +25,7 @@ const leadDelete = catchAsync(async (req, res) => {
 });
 
 const getLeads = catchAsync(async (req, res) => {
-  console.info("das",req)
-
-  const filter = pick(req.query, ['name']);
+  const filter = pick(req.query, ['name','branch']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await getLeadList(filter, options);
   res.send(result);
