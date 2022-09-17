@@ -5,14 +5,14 @@ const { toJSON , paginate} = require('./plugins');
 
 const costSchema = new mongoose.Schema({
   totalCost: { type: Number, required: true },
-  category : { type: String, required: true },
+  category : { type: String, required: false },
   description : { type : String, required : false },
   image : { type : String, required : false },
-  type : { type : String, required : false, enum : ['Office expence','Employee expence','Misleniuneous expence','Other expence'] },
+  type : { type : String, required : false, enum : ['Office expence','Employee expence','Misleniuneous expence','Other expence',''] },
   user: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'User',
-    required: true,
+    required: false,
     autopopulate : true
   } 
 }

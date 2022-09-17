@@ -17,6 +17,12 @@ const getUsers = catchAsync(async (req, res) => {
   const result = await userService.queryUsers(filter, options);
   res.send(result);
 });
+const getUsersproduct = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await userService.queryUsersProduct();
+  res.send(result);
+});
 const getUsersByBranch = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
@@ -75,6 +81,7 @@ const deleteUser = catchAsync(async (req, res) => {
 module.exports = {
   createUser,
   getUsers,
+  getUsersproduct,
   getUsersByBranch,
   getUsersByIbo,
   getProductClient,

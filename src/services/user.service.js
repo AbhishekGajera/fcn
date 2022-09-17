@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const { Console } = require('winston/lib/winston/transports');
 const { User ,Product } = require('../models');
 const ApiError = require('../utils/ApiError');
 const  { sendNewPasswordEmail,sendEmailWelcome } = require('./email.service')
@@ -80,6 +81,13 @@ const queryUsers = async (filter, options) => {
   const users = await User.paginate(filter, options);
   return users;
 };
+
+const queryUsersProduct = async () =>{
+  const users = await User.find({}).populate('products.product');
+  // console.log("us",users.products)
+ 
+  return users;
+}
 
 const getUserByIbos = async (id) => {
   return User.find({ IBO:id });
@@ -213,6 +221,8 @@ const deleteUserById = async (userId) => {
 module.exports = {
   createUser,
   queryUsers,
+  
+  queryUsersProduct,
   getUserById,
   getUserByIbos,
   getProductById,

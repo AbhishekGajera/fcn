@@ -9,18 +9,18 @@ const targetSchema = new mongoose.Schema({
   product: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'Product',
-    required: true,
+    required: false,
     autopopulate: true,
   },
   user: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'User',
-    required: true,
+    required: false,
     autopopulate: true,
   },
   userType: {
     type: String,
-    required: true,
+    required: false,
   },
   Description: {
     type: String,
@@ -28,7 +28,7 @@ const targetSchema = new mongoose.Schema({
   },
   qty: {
     type: Number,
-    required: true,
+    required: false,
   },
   status : {
     type: Number,
