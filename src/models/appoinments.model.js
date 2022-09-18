@@ -15,7 +15,7 @@ const appoinmentsSchema = new mongoose.Schema({
   },
   toDate:{
     type: Date,
-    required : true
+    required : false
   },
   desc: {
     type: String,
