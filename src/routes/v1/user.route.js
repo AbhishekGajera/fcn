@@ -10,9 +10,14 @@ router
   .route('/')
   .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
   .get(auth(), validate(userValidation.getUsers), userController.getUsers);
+
   router
-  .route('/users-product')
-  .get(auth(), validate(userValidation.getUsers), userController.getUsersproduct);
+  .route('/users-count-powerone')
+  .get(auth(), validate(userValidation.getUsers), userController.getUsersPowerone);
+
+  router
+  .route('/users-count-sip')
+  .get(auth(), validate(userValidation.getUsers), userController.getUsersSIP);
 
 router
   .route('/get-user-branch')

@@ -1,45 +1,46 @@
 const httpStatus = require('http-status');
 const { Console } = require('winston/lib/winston/transports');
-const { User ,Product } = require('../models');
+const { User, Product } = require('../models');
 const ApiError = require('../utils/ApiError');
-const  { sendNewPasswordEmail,sendEmailWelcome } = require('./email.service')
+const { sendNewPasswordEmail, sendEmailWelcome } = require('./email.service')
+const mongoose = require('mongoose');
 
 /**
  * Create a user
  * @param {Object} userBody
  * @returns {Promise<User>}
  */
-const createUser = async (userBody,userId) => {
- 
-  if ( await User.isEmailTaken(userBody.email)) {
+const createUser = async (userBody, userId) => {
+
+  if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
 
   const productDetail = await Product.findById(userBody?.product)
   let commision = 0;
-  if(productDetail){
-    commision = ((+userBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
+  if (productDetail) {
+    commision = ((+userBody.minAmount || 0) * (+productDetail.commision || 0)) / 100;
   }
-  
+
   let Id = userId
-  if(userBody?.IBO){
-    Id = userBody?.IBO  
+  if (userBody?.IBO) {
+    Id = userBody?.IBO
   }
   const ibo = await User.findById(Id);
-  if(ibo){
-    
-    if(!ibo?.total_earning) {
+  if (ibo) {
+
+    if (!ibo?.total_earning) {
       ibo.total_earning = 0
     }
-    ibo.total_earning = (ibo?.total_earning || 0) + commision; 
+    ibo.total_earning = (ibo?.total_earning || 0) + commision;
     ibo.save();
   }
 
 
   const products = [{
-    product : userBody.product,
-    minAmount : userBody.minAmount,
-    maxAmount : userBody.maxAmount
+    product: userBody.product,
+    minAmount: userBody.minAmount,
+    maxAmount: userBody.maxAmount
   }]
 
   // const user = await User.findById(req.query.user)
@@ -59,12 +60,12 @@ const createUser = async (userBody,userId) => {
   userBody.products = products
 
 
-try {
-  await sendEmailWelcome(userBody.email,userBody.name)
-} catch (error) {
-  console.info(error)
-}
-  
+  try {
+    await sendEmailWelcome(userBody.email, userBody.name)
+  } catch (error) {
+    console.info(error)
+  }
+
   return User.create(userBody);
 };
 
@@ -82,27 +83,113 @@ const queryUsers = async (filter, options) => {
   return users;
 };
 
-const queryUsersProduct = async () =>{
-  const users = await User.find({}).populate('products.product');
+const queryUsersPowerone = async () => {
+  const users = await User.aggregate([
+    {
+      $unwind: {
+        path: '$products'
+      }
+    },
+    {
+      $lookup: {
+        from: 'products',
+        localField: 'products.product',
+        foreignField: '_id',
+        as: 'products.product'
+      }
+    },
+    {
+      $match : { 'products.product.name' : 'powerone'   }
+    },
+    {
+      $unwind: {
+        path: '$products.product'
+      }
+    },
+    {
+      $group: {
+        _id: '$_id',
+        products: {
+          $push: '$products'
+        }
+      }
+    },
+    {
+      "$group": {
+          "_id": "tempId",
+          "totalValue": {
+              $sum: {
+                  $sum: "$products.minAmount"
+              }
+          }
+      }
+  }
+  ]);
   // console.log("us",users.products)
- 
+
+  return users;
+}
+const queryUsersSIP = async () => {
+  const users = await User.aggregate([
+    {
+      $unwind: {
+        path: '$products'
+      }
+    },
+    {
+      $lookup: {
+        from: 'products',
+        localField: 'products.product',
+        foreignField: '_id',
+        as: 'products.product'
+      }
+    },
+    {
+      $match : { 'products.product.name' : 'sip'   }
+    },
+    {
+      $unwind: {
+        path: '$products.product'
+      }
+    },
+    {
+      $group: {
+        _id: '$_id',
+        products: {
+          $push: '$products'
+        }
+      }
+    },
+    {
+      "$group": {
+          "_id": "tempId",
+          "totalValue": {
+              $sum: {
+                  $sum: "$products.minAmount"
+              }
+          }
+      }
+  }
+  ]);
+  // console.log("us",users.products)
+
   return users;
 }
 
 const getUserByIbos = async (id) => {
-  return User.find({ IBO:id });
+  return User.find({ IBO: id });
 };
 
 const getProductById = async (id) => {
-  const usr = User.findById(id,'products').populate('products.product');
-  
+  const usr = User.findById(id, 'products').populate('products.product');
+
   return usr
   // return usr.products;
 };
 
 const getTotalById = async (id) => {
-  const usr = User.findById(id,'products');
-  
+  const usr = User.findById(id, 'products');
+
   return usr
   // return usr.products;
 };
@@ -140,26 +227,26 @@ const updateUserById = async (userId, updateBody) => {
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  
+
   Object.assign(user, updateBody);
   await user.save();
-  
-  if(updateBody.hasOwnProperty('password')){
-    await sendNewPasswordEmail(user.email,user.email,updateBody.password)
+
+  if (updateBody.hasOwnProperty('password')) {
+    await sendNewPasswordEmail(user.email, user.email, updateBody.password)
   }
   return user;
 };
 
-const updateProductAssign = async (userId, updateBody,UId) => {
+const updateProductAssign = async (userId, updateBody, UId) => {
   const user = await getUserById(userId);
 
   let Id = UId;
-  if(user?.IBO) {
+  if (user?.IBO) {
     Id = user?.IBO
   }
 
   const reqUser = await getUserById(UId)
- 
+
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
@@ -167,26 +254,26 @@ const updateProductAssign = async (userId, updateBody,UId) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
 
-   
+
 
   const productDetail = await Product.findById(updateBody?.product)
-  
 
-  
-  const commision = ((+updateBody.minAmount || 0) * (+productDetail.commision || 0)) /  100;
-  reqUser.total_earning = (reqUser.total_earning || 0) + commision; 
-  console.log("ttl",reqUser.total_earning)
+
+
+  const commision = ((+updateBody.minAmount || 0) * (+productDetail.commision || 0)) / 100;
+  reqUser.total_earning = (reqUser.total_earning || 0) + commision;
+  console.log("ttl", reqUser.total_earning)
   reqUser.save()
-  
+
   user.products.push(
     {
-      product : updateBody.product,
-    minAmount : updateBody.minAmount,
-    maxAmount : updateBody.maxAmount
+      product: updateBody.product,
+      minAmount: updateBody.minAmount,
+      maxAmount: updateBody.maxAmount
     }
   )
 
-  
+
 
   // const products = [{
   //   product : updateBody.product,
@@ -196,9 +283,9 @@ const updateProductAssign = async (userId, updateBody,UId) => {
   // updateBody.products = products
   Object.assign(user, updateBody);
   await user.save();
-  
-  if(updateBody.hasOwnProperty('password')){
-    await sendNewPasswordEmail(user.email,user.email,updateBody.password)
+
+  if (updateBody.hasOwnProperty('password')) {
+    await sendNewPasswordEmail(user.email, user.email, updateBody.password)
   }
   return user;
 };
@@ -221,8 +308,8 @@ const deleteUserById = async (userId) => {
 module.exports = {
   createUser,
   queryUsers,
-  
-  queryUsersProduct,
+
+  queryUsersPowerone,
   getUserById,
   getUserByIbos,
   getProductById,
@@ -230,5 +317,6 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
-  updateProductAssign
+  updateProductAssign,
+  queryUsersSIP
 };

@@ -17,10 +17,17 @@ const getUsers = catchAsync(async (req, res) => {
   const result = await userService.queryUsers(filter, options);
   res.send(result);
 });
-const getUsersproduct = catchAsync(async (req, res) => {
+const getUsersPowerone = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
-  const result = await userService.queryUsersProduct();
+  const result = await userService.queryUsersPowerone();
+  res.send(result);
+});
+
+const getUsersSIP = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await userService.queryUsersSIP();
   res.send(result);
 });
 const getUsersByBranch = catchAsync(async (req, res) => {
@@ -81,7 +88,7 @@ const deleteUser = catchAsync(async (req, res) => {
 module.exports = {
   createUser,
   getUsers,
-  getUsersproduct,
+  getUsersPowerone,
   getUsersByBranch,
   getUsersByIbo,
   getProductClient,
@@ -89,5 +96,6 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
-  productAssign
+  productAssign,
+  getUsersSIP
 };
