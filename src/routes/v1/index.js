@@ -11,6 +11,7 @@ const revenueRoute = require('./revenues.route');
 const leadsRoute = require('./leads.route');
 const videoRoute = require('./video.route');
 const transactionRoute = require('./transaction.route');
+const notificationRoute = require('./notification.route');
 
 
 
@@ -69,6 +70,10 @@ const defaultRoutes = [
     path: '/transaction',
     route: transactionRoute,
   },
+  {
+    path : '/notification',
+    route : notificationRoute
+  }
 ];
 
 const devRoutes = [
