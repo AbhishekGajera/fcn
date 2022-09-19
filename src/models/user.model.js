@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema(
       required: false,
       trim: true,
       unique: false,
-      default : this.first_name + ' ' + this.last_name
+      default: this.first_name + ' ' + this.last_name
     },
     first_name: {
       type: String,
@@ -20,7 +20,7 @@ const userSchema = mongoose.Schema(
       trim: true,
       unique: true
     },
-     last_name: {
+    last_name: {
       type: String,
       required: false,
       trim: true,
@@ -64,119 +64,119 @@ const userSchema = mongoose.Schema(
       default: 'normal'
     },
     contactno: {
-      type : Number,
-      required : true,
+      type: Number,
+      required: true,
       default: 0000000000,
     },
-    dob : {
-      type : String,
-      required : true,
+    dob: {
+      type: String,
+      required: true,
       default: '01/01/-1'
     },
-   image : { 
-    type : String, required : false
-   },
-   avatar : { 
-    type : String, required : false
-   },
-   
-    country : {
-      type : String,
-      required : true,
-      default: 'India'
+    image: {
+      type: String, required: false
     },
-    bankIfscCode : {
-      type : String,
-      lowercase:false,
-      required : false
-    },
-    address : {
-      type : String,
-      required : false
-    },
-    bankAccNo : {
-      type : String,
-      required : false,
-    },
-    branchHeadName : {
-      type : String,
-      required : false
-    },
-    branchContact : {
-      type : Number,
-      required : false,
+    avatar: {
+      type: String, required: false
     },
 
-    branch : {
-      type : String,
-      required : false,
+    country: {
+      type: String,
+      required: true,
+      default: 'India'
     },
-    IBO : {
+    bankIfscCode: {
+      type: String,
+      lowercase: false,
+      required: false
+    },
+    address: {
+      type: String,
+      required: false
+    },
+    bankAccNo: {
+      type: String,
+      required: false,
+    },
+    branchHeadName: {
+      type: String,
+      required: false
+    },
+    branchContact: {
+      type: Number,
+      required: false,
+    },
+
+    branch: {
+      type: String,
+      required: false,
+    },
+    IBO: {
       type: mongoose.SchemaTypes.ObjectId,
-        ref: 'User',
-        required: false,
-        autopopulate : true
+      ref: 'User',
+      required: false,
+      autopopulate: true
     },
-    products : [{
-      
-      product : {
+    products: [{
+
+      product: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'Product',
         required: false,
-        autopopulate : true
+        autopopulate: true
       },
-        
-      minAmount : {
-        type : Number,
-        required : false,
-        default : 0
+
+      minAmount: {
+        type: Number,
+        required: false,
+        default: 0
       },
-      maxAmount : {
-        type : Number,
-        required : false,
-        default : 0
+      maxAmount: {
+        type: Number,
+        required: false,
+        default: 0
       }
     }],
-    total_earning:{
-      type : Number,
-      required : false,
-      default : 0
+    total_earning: {
+      type: Number,
+      required: false,
+      default: 0
     },
-    image : { type : String, required : false },
+    image: { type: String, required: false },
 
-    status : {
-      type : Number,
-      enum : [0,1,2], // 0 is Active, 1 is inActive, 2 is Terminate
-      default : 0
+    status: {
+      type: Number,
+      enum: [0, 1, 2], // 0 is Active, 1 is inActive, 2 is Terminate
+      default: 0
     },
-    aadhar_card_no : {
-      type : String,
-      required : false,
+    aadhar_card_no: {
+      type: String,
+      required: false,
     },
-    pan_card_no : {
-      type : String,
-      required : false,
+    pan_card_no: {
+      type: String,
+      required: false,
     },
-    b_head_name : {
-        type : String,
-        default : ''
-      },
-    b_head_contact_no : {
-        type : String,
-        default : ''
-      },
-    b_aadhar_card_no : {
-        type : String,
-        default : ''
-      },
-      b_pan_card_no : {
-        type : String,
-        default : ''
-      },
-      self_declaration : {
-        type : String,
-        default : ''
-      },
+    b_head_name: {
+      type: String,
+      default: ''
+    },
+    b_head_contact_no: {
+      type: String,
+      default: ''
+    },
+    b_aadhar_card_no: {
+      type: String,
+      default: ''
+    },
+    b_pan_card_no: {
+      type: String,
+      default: ''
+    },
+    self_declaration: {
+      type: String,
+      default: ''
+    },
   },
   {
     timestamps: true,
@@ -186,6 +186,7 @@ const userSchema = mongoose.Schema(
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);
 userSchema.plugin(paginate);
+userSchema.plugin(require('mongoose-autopopulate'));
 
 /**
  * Check if email is taken
