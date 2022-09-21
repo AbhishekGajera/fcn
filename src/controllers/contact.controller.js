@@ -19,7 +19,7 @@ const getConnectId = catchAsync(async (req, res) => {
 
 
 const getContacts = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', 'role','user','custom']);
+  const filter = pick(req.query, ['name', 'role','branch','custom']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await getContactList(filter, options);
   res.send(result);
