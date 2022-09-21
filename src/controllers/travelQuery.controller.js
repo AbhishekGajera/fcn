@@ -15,7 +15,7 @@ const travelQueryAdd = catchAsync(async (req, res) => {
 });
 
 const travelQueryUpdate = catchAsync(async (req, res) => {
-  const result = await updateTravelQueryById(req.body.trasaction_id,req.body);
+  const result = await updateTravelQueryById(req.body.travel_id,req.body);
   res.send(result);
 });
 

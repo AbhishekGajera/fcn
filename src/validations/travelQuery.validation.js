@@ -3,7 +3,7 @@ const { objectId } = require('./custom.validation');
 
 const deleteTravelQuery = {
   params: Joi.object().keys({
-    travelId: Joi.string().custom(objectId),
+    travelQueryId: Joi.string().custom(objectId),
   }),
 };
 

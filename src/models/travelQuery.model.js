@@ -28,7 +28,13 @@ const travelQuerySchema = new mongoose.Schema({
     type : Number,
     enum : [0,1,2], // 0 is pending, 1 is approved, 2 is declined
     default : 0
-  }
+  },
+  user: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'User',
+    required: true,
+    autopopulate: true,
+  },
 },
 {
   timestamps : true
