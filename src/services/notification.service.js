@@ -134,5 +134,6 @@ module.exports = {
   getNotificationsList,
   getNotificationsUser,
   getNotificationsBranch,
-  addViewNotifications
+  addViewNotifications,
+  getNotificationsById
 };

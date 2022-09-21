@@ -22,8 +22,12 @@ router
 .post(auth(),notificationController.addview)
 
 router
-.route('/get-notification-user/:Transid')
+.route('/get-notification-user/:notificationId')
 .get(notificationController.getNotificationsByUser)
+
+router
+.route('/get-notificationById/:notificationId')
+.get(notificationController.getNotifiById)
 
 router
 .route('/get-notification-branch')
