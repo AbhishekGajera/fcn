@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+const ObjectId = require('mongoose').Types.ObjectId; 
 
 const paginate = (schema) => {
   /**
@@ -32,8 +33,15 @@ const paginate = (schema) => {
       sort = 'createdAt';
     }
 
-    const formateCustomValidation = function(spy){
-      Object.keys(spy).forEach(function(key){ spy[key] =  { $regex: '.*' + spy[key] + '.*',$options:'i'} });
+    const formateCustomValidation = function (spy) {
+      Object.keys(spy).forEach(function (key) {
+        if(key !== 'IBO'){
+          spy[key] = { $regex: '.*' + spy[key] + '.*', $options: 'i' }
+        }
+        else {
+          spy[key] = new ObjectId(spy[key])
+        }
+      });
       delete spy.custom
       return spy;
     }
@@ -43,18 +51,18 @@ const paginate = (schema) => {
     const skip = (page - 1) * limit;
 
     let countPromise
-    if(filter.hasOwnProperty('custom')){
+    if (filter.hasOwnProperty('custom')) {
       countPromise = this.countDocuments(formateCustomValidation(filter)).exec();
     }
     else {
       countPromise = this.countDocuments(filter).exec();
     }
-    
-    let docsPromise 
-    if(filter.hasOwnProperty('custom')){
-      docsPromise  = this.find(formateCustomValidation(filter)).sort(sort).skip(skip).limit(limit);
+
+    let docsPromise
+    if (filter.hasOwnProperty('custom')) {
+      docsPromise = this.find(formateCustomValidation(filter)).sort(sort).skip(skip).limit(limit);
     } else {
-      docsPromise  = this.find(filter).sort(sort).skip(skip).limit(limit);
+      docsPromise = this.find(filter).sort(sort).skip(skip).limit(limit);
     }
 
     if (options.populate) {

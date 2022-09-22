@@ -3,9 +3,9 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { userService } = require('../services');
+const ObjectId = require('mongoose').Types.ObjectId; 
 
 const createUser = catchAsync(async (req, res) => {
-  console.log("ub",req.body.name)
   const user = await userService.createUser(req.body,req.user.id);
   console.info(req.user.id)
   res.status(httpStatus.CREATED).send(user);
@@ -14,6 +14,11 @@ const createUser = catchAsync(async (req, res) => {
 const getUsers = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
+
+  if(filter?.IBO){
+    filter.IBO = new ObjectId(filter.IBO)
+  }
+
   const result = await userService.queryUsers(filter, options);
   res.send(result);
 });

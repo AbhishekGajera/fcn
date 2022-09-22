@@ -3,7 +3,7 @@ const { Console } = require('winston/lib/winston/transports');
 const { User, Product } = require('../models');
 const ApiError = require('../utils/ApiError');
 const { sendNewPasswordEmail, sendEmailWelcome } = require('./email.service')
-const mongoose = require('mongoose');
+const ObjectId = require('mongoose').Types.ObjectId; 
 
 /**
  * Create a user
@@ -79,6 +79,7 @@ const createUser = async (userBody, userId) => {
  * @returns {Promise<QueryResult>}
  */
 const queryUsers = async (filter, options) => {
+  console.info("filter++ ",filter)
   const users = await User.paginate(filter, options);
   return users;
 };
