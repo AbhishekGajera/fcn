@@ -56,7 +56,7 @@ const videoApprove = catchAsync(async (req, res) => {
 
 const getVideo = catchAsync(async (req, res) => {
   
-  const filter = pick(req.query, ['name','status']);
+  const filter = pick(req.query, ['name','status','type']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await getVideoList(filter, options);
   res.send(result);
