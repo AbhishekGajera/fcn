@@ -11,6 +11,8 @@ const revenueRoute = require('./revenues.route');
 const leadsRoute = require('./leads.route');
 const videoRoute = require('./video.route');
 const transactionRoute = require('./transaction.route');
+const travelRoute = require('./travel.route');
+const travelQueryRoute = require('./travelQuery.route');
 const notificationRoute = require('./notification.route');
 const DashnotificationRoute = require('./dashnotify.route');
 
@@ -71,6 +73,14 @@ const defaultRoutes = [
   {
     path: '/transaction',
     route: transactionRoute,
+  },
+  {
+    path: '/travel',
+    route: travelRoute,
+  },
+  {
+    path: '/travelQuery',
+    route: travelQueryRoute,
   },
   {
     path : '/notification',

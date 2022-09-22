@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { approveLeave, updateLeaveById, deleteLeaveById, getLeavesList } = require('../services/employee.service');
+const { approveLeave, updateLeaveById, deleteLeaveById, getLeavesList, createEmployee, getEmployeeList , updateEmployeeById, deleteEmpById } = require('../services/employee.service');
 const pick = require('../utils/pick');
 
 
@@ -26,9 +26,43 @@ const getLeaves = catchAsync(async (req, res) => {
   res.send(result);
 });
 
+const createEmp = catchAsync(async (req, res) => {
+  const user = await createEmployee(req.body);
+  res.status(httpStatus.CREATED).send(user);
+});
+
+const getEmp = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['name', 'role','custom']);
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await getEmployeeList(filter, options);
+  res.send(result);
+});
+
+const getEmployeeByBranch = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['branch']);
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await getEmployeeList(filter, options);
+  res.send(result);
+});
+
+const updateEmployee = catchAsync(async (req, res) => {
+  const user = await updateEmployeeById(req.params.id, req.body);
+  res.send(user);
+});
+
+const empDelete = catchAsync(async (req, res) => {
+  await deleteEmpById(req.params.id);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
 module.exports = {
   leaveApprove,
   leaveUpdate,
   leaveDelete,
-  getLeaves
+  getLeaves,
+  createEmp,
+  getEmp,
+  getEmployeeByBranch,
+  updateEmployee,
+  empDelete
 };
