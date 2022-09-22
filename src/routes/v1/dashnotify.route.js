@@ -15,6 +15,10 @@ router
 .get(auth(),DashnotificationController.DashgetNotifications)
 
 router
+.route('/fetch-recent-notification')
+.get(auth(),DashnotificationController.DashgetRecentNotifications)
+
+router
 .route('/add-dash-view-notification')
 .post(auth(),DashnotificationController.Dashaddview)
 

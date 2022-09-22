@@ -4,6 +4,7 @@ const {   addDashNotifications,
     updateDashNotificationsById,
     deleteDashNotificationsById,
     getDashNotificationsList,
+    getDashRecentNotificationsList,
     getDashNotificationsUser,
     getDashNotificationsBranch,
     addViewDashNotifications } = require('../services/dashnotify.service');
@@ -32,6 +33,13 @@ const DashgetNotifications = catchAsync(async (req, res) => {
   res.send(result);
 });
 
+const DashgetRecentNotifications = catchAsync(async (req, res) => {
+  // const filter = pick(req.query, ['title', 'targetAudience','user','status']);
+  // const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await getDashRecentNotificationsList();
+  res.send(result);
+});
+
 const Dashaddview = catchAsync(async (req, res) => {
   const result = await addViewDashNotifications(req.body);
   res.send(result);
@@ -53,6 +61,7 @@ module.exports = {
   DashnotificationAdd,
   DashnotificationUpdate,
   DashnotificationDelete,
+  DashgetRecentNotifications,
   DashgetNotifications,
   DashgetNotificationsByUser,
   DashgetNotificationsByBranch,

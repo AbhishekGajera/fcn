@@ -98,6 +98,24 @@ const getDashNotificationsList = async (filter, options, userId) => {
   return notification;
 };
 
+const getDashRecentNotificationsList = async () => {
+  const notification = await Dashnotifys.find({}).sort({$natural:-1}).limit(1);
+  if (!notification) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'notification not found');
+  }
+
+  // for (let index = 0; index < notification?.results?.length; index++) {
+  //   const element = notification?.results?.[index];
+  //   const checkStatus = await SeenNotifications.findOne({ userId , notificationId : element._id  })
+
+  //   if(checkStatus){
+  //     element.hasShowen = true
+  //   }
+    
+  // }
+
+  return notification;
+};
 
 const getDashNotificationsUser = async (id) => {
   const notification = await Dashnotifys.find({
@@ -132,6 +150,7 @@ module.exports = {
   updateDashNotificationsById,
   deleteDashNotificationsById,
   getDashNotificationsList,
+  getDashRecentNotificationsList,
   getDashNotificationsUser,
   getDashNotificationsBranch,
   addViewDashNotifications

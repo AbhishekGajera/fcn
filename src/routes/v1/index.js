@@ -87,7 +87,7 @@ const defaultRoutes = [
     route : notificationRoute
   },
   {
-    path : '/Dashnotification',
+    path : '/dashnotification',
     route : DashnotificationRoute
   }
   
