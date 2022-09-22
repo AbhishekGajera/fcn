@@ -66,8 +66,6 @@ const getProductClient = catchAsync(async (req, res) => {
 
 const getTotalInvest = catchAsync(async (req, res) => {
   const user = await userService.getTotalById(req.params.usrId);
-  console.log("us0",user.product)
-
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }

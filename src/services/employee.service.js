@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const Salary = require('../models/salary.model');
 const Leave = require('../models/leave.model');
+const Emp = require('../models/employee.model');
 const ApiError = require('../utils/ApiError');
 const { getUserById } = require('./user.service')
 /**
@@ -76,11 +77,92 @@ const approveLeave = async (leaveBody) => {
  return leave;
 };
 
+/**
+ * Get emp by id
+ * @param {ObjectId} id
+ * @returns {Promise<User>}
+ */
+ const getEmpById = async (id) => {
+  return Emp.findById(id);
+};
+
+
+/**
+ * Create a emplloyee
+ * @param {Object} userBody
+ * @returns {Promise<User>}
+ */
+const createEmployee = async (userBody) => {
+  if (await Emp.isEmailTaken(userBody.email)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  }
+  userBody.name = (userBody?.first_name || '') + ' ' + (userBody?.last_name ||  ' ')
+  return Emp.create(userBody);
+}
+
+/**
+ * Get employee
+ * @returns {Promise<Employee>}
+ */
+ const getEmployeeList = async (filter,options) => {
+  const emp = await Emp.paginate(filter, options);
+  if (!emp) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'emp not found');
+  }
+  return emp;
+ };
+
+ /**
+ * Update emp by id
+ * @param {ObjectId} empId
+ * @param {Object} updateBody
+ * @returns {Promise<Emp>}
+ */
+const updateEmployeeById = async (empId, updateBody) => {
+  const emp = await getEmpById(empId);
+  if (!emp) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Emp not found');
+  }
+  if (updateBody.email && (await Emp.isEmailTaken(updateBody.email, empId))) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  }
+
+  if(updateBody?.first_name || updateBody?.last_name){
+    updateBody.name = (updateBody?.first_name || emp?.first_name) + ' ' + (updateBody?.last_name ||  emp?.last_name)
+  }
+
+  Object.assign(emp, updateBody);
+  await emp.save();
+
+  if (updateBody.hasOwnProperty('password')) {
+    await sendNewPasswordEmail(emp.email, emp.email, updateBody.password)
+  }
+  return emp;
+};
+
+/**
+ * Delete emp by id
+ * @param {ObjectId} empId
+ * @returns {Promise<Employee>}
+ */
+ const deleteEmpById = async (empId) => {
+  const emp = await getEmpById(empId);
+  if (!emp) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'emp not found');
+  }
+  await emp.remove();
+  return emp;
+};
+
 
 
 module.exports = {
   approveLeave,
   updateLeaveById,
   deleteLeaveById,
-  getLeavesList
+  getLeavesList,
+  createEmployee,
+  getEmployeeList,
+  updateEmployeeById,
+  deleteEmpById
 };
