@@ -18,6 +18,12 @@ const dashnotifySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  targetUser : {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'User',
+    required: true,
+    autopopulate: true,
+  },
   title: {
     type: String,
     required: true,

@@ -77,7 +77,7 @@ const addTransaction = async (leaveBody) => {
 };
 
 
-const getTransactionUser = async (id) => {
+const getTransactionUser = async (id,page,limit) => {
   const transaction = await Transaction.find({
     $or: [
       {
@@ -88,11 +88,26 @@ const getTransactionUser = async (id) => {
       }
     ],
     status : 0
-  });
+  }).skip(page).limit(limit);
+
+  console.info("transaction++ ",transaction)
+
+  const totalCount = await Transaction.count({
+    $or: [
+      {
+        from_user: id ,
+      },
+      {
+        to_user: id ,
+      }
+    ],
+    status : 0
+  })
+
   if (!transaction) {
     throw new ApiError(httpStatus.NOT_FOUND, 'transaction not found');
   }
-  return transaction;
+  return { results : transaction, totalCount : totalCount };
  };
  
  const getTransactionBranch = async (filter,options) => {
