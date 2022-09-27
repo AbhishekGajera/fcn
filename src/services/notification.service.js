@@ -1,8 +1,10 @@
 const httpStatus = require('http-status');
+const Notification = require('../models/notification.model');
 const Notifications = require('../models/notification.model');
 const SeenNotifications = require('../models/notificationSeen.model');
 const ApiError = require('../utils/ApiError');
 const { getUserById } = require('./user.service')
+const ObjectId = require('mongoose').Types.ObjectId; 
 
 /**
  * Create a target
@@ -98,6 +100,27 @@ const getNotificationsList = async (filter, options, userId) => {
   return notification;
 };
 
+/**
+ * Get Notification
+ * @returns {Promise<Employee>}
+ */
+ const getPersonalizedeList = async (id,page,limit) => {
+  const notifications = await Notification.find({
+    targetAudience : 'specificUser',
+    user : new ObjectId(id)
+  }).skip(page).limit(limit);
+
+  const totalCount = await Notification.count({
+    targetAudience : 'specificUser',
+    user : new ObjectId(id)
+  })
+
+  if (!notifications) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'notifications not found');
+  }
+  return { results : notifications, totalCount : totalCount };
+};
+
 
 const getNotificationsUser = async (id) => {
   const notification = await Notifications.find({
@@ -135,5 +158,6 @@ module.exports = {
   getNotificationsUser,
   getNotificationsBranch,
   addViewNotifications,
-  getNotificationsById
+  getNotificationsById,
+  getPersonalizedeList
 };

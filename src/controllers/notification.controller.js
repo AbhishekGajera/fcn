@@ -7,7 +7,8 @@ const {  addNotifications,
     getNotificationsBranch,
     addViewNotifications,
     getNotificationsList,
-    getNotificationsById } = require('../services/notification.service');
+    getNotificationsById, 
+    getPersonalizedeList} = require('../services/notification.service');
 const pick = require('../utils/pick');
 
 
@@ -55,6 +56,14 @@ const getNotificationsByBranch = catchAsync(async (req, res) => {
   res.send(result);
 });
 
+const getPersonalizedNotification = catchAsync(async (req, res) => {
+  const page = parseInt(req.query.page, 10) || 0;
+  const limit = parseInt(req.query.limit, 10) || 10
+
+  const result = await getPersonalizedeList(req.params.userId,page, limit);
+  res.send({ results : result  });
+});
+
 module.exports = {
   notificationAdd,
   notificationUpdate,
@@ -63,5 +72,6 @@ module.exports = {
   getNotificationsByUser,
   getNotificationsByBranch,
   addview,
-  getNotifiById
+  getNotifiById,
+  getPersonalizedNotification
 };

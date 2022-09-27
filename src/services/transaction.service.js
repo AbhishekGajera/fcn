@@ -90,8 +90,6 @@ const getTransactionUser = async (id,page,limit) => {
     status : 0
   }).skip(page).limit(limit);
 
-  console.info("transaction++ ",transaction)
-
   const totalCount = await Transaction.count({
     $or: [
       {

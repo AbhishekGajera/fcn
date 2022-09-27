@@ -26,6 +26,10 @@ router
 .get(notificationController.getNotificationsByUser)
 
 router
+.route('/get-personalized-notification/:userId')
+.get(notificationController.getPersonalizedNotification)
+
+router
 .route('/get-notificationById/:notificationId')
 .get(notificationController.getNotifiById)
 
