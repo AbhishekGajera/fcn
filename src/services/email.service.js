@@ -139,7 +139,11 @@ If you did not create an account, then ignore this email.`;
 
 const sendEmailWelcome = async (to,name) => {
   const subject = 'Welcome To FCN';
-  replaceText(path.join(__dirname, '../utils/extra/welcome_letter.pdf'), path.join(__dirname, '../utils/extra/output.pdf'), 0, '[(T)122(o,)]', `[(${name})]`);
+  try {
+    replaceText(path.join(__dirname, '../utils/extra/welcome_letter.pdf'), path.join(__dirname, '../utils/extra/output.pdf'), 0, '[(T)122(o,)]', `[(${name})]`);
+  } catch (error) {
+    
+  }
  
   const attachments = [
     {
@@ -162,7 +166,11 @@ const sendEmailWelcome = async (to,name) => {
   // replace this url with the link to the email verification page of your front-end app
   const text = 'Check out this attached pdf file';
  
-  await sendEmail(to, subject, text,attachments);
+  try {
+    await sendEmail(to, subject, text,attachments);
+  } catch (error) {
+    console.info(error)
+  }
 };
 0
 
