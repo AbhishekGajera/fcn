@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const { Console } = require('winston/lib/winston/transports');
 const { User, Product } = require('../models');
 const ApiError = require('../utils/ApiError');
-const { sendNewPasswordEmail, sendEmailWelcome } = require('./email.service')
+const { sendNewPasswordEmail, sendEmailWelcome,sendEmailWelcomeIbo } = require('./email.service')
 const ObjectId = require('mongoose').Types.ObjectId; 
 
 /**
@@ -11,6 +11,8 @@ const ObjectId = require('mongoose').Types.ObjectId;
  * @returns {Promise<User>}
  */
 const createUser = async (userBody, userId) => {
+console.log("ub",userBody)
+console.log("ui",userId)
 
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
@@ -29,11 +31,18 @@ const createUser = async (userBody, userId) => {
   const ibo = await User.findById(Id);
   if (ibo) {
 
+
     if (!ibo?.total_earning) {
       ibo.total_earning = 0
     }
     ibo.total_earning = (ibo?.total_earning || 0) + commision;
     ibo.save();
+    try {
+      await sendEmailWelcomeIbo(userBody.email, userBody.name)
+    } catch (error) {
+      console.info(error)
+    }
+
   }
 
 

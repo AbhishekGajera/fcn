@@ -172,7 +172,42 @@ const sendEmailWelcome = async (to,name) => {
     console.info(error)
   }
 };
-0
+const sendEmailWelcomeIbo = async (to,name) => {
+  const subject = 'Welcome To FCN';
+  try {
+    replaceText(path.join(__dirname, '../utils/extra/welcome_letter.pdf'), path.join(__dirname, '../utils/extra/output.pdf'), 0, '[(T)122(o,)]', `[(${name})]`);
+  } catch (error) {
+    
+  }
+ 
+  const attachments = [
+    {
+        filename: 'welcome_letter.pdf',  
+        path: path.join(__dirname, '../utils/extra/output.pdf')  ,                               
+        contentType: 'application/pdf',
+    }]
+  
+//   const pdf = await generatePDF(`
+// <html> 
+// <head>
+//   <title>Test PDF</title>
+// </head>
+// <body>
+// <h1>gg</h1>
+//    // The contents of our PDF will go here...
+// </body>
+// </html>
+//     `);
+  // replace this url with the link to the email verification page of your front-end app
+  const text = 'Check out this attached pdf file';
+ 
+  try {
+    await sendEmail(to, subject, text,attachments);
+  } catch (error) {
+    console.info(error)
+  }
+};
+
 
 
 module.exports = {
@@ -181,5 +216,6 @@ module.exports = {
   sendResetPasswordEmail,
   sendVerificationEmail,
   sendNewPasswordEmail,
-  sendEmailWelcome
+  sendEmailWelcome,
+  sendEmailWelcomeIbo
 };
