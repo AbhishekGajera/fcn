@@ -86,6 +86,7 @@ const updateUser = {
       IBO: Joi.string(),
       role: Joi.string().valid('user', 'admin','IBO','branch'),
       status: Joi.number(),
+      perfomance: Joi.number(),
       aadhar_card_no: Joi.string(),
       pan_card_no: Joi.string(),
       branch_head : {
