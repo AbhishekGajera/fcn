@@ -36,6 +36,10 @@ router
   .route('/product-assign')
   .patch(auth(), userController.productAssign)
 
+  router
+  .route('/get-top-perfomance/:userId/:userType/:perfomanceType')
+  .get( userController.getTopPerfomer)
+
 router
   .route('/:userId')
   .get(auth(), validate(userValidation.getUser), userController.getUser)

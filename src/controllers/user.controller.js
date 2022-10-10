@@ -63,6 +63,14 @@ const getProductClient = catchAsync(async (req, res) => {
   res.send(user);
 });
 
+const getTopPerfomer = catchAsync(async (req, res) => {
+  const user = await userService.getPerfomaerById(req.params.userId, req.params.userType , req.params.perfomanceType );
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  res.send(user);
+});
+
 
 const getTotalInvest = catchAsync(async (req, res) => {
   const user = await userService.getTotalById(req.params.usrId);
@@ -100,5 +108,6 @@ module.exports = {
   updateUser,
   deleteUser,
   productAssign,
-  getUsersSIP
+  getUsersSIP,
+  getTopPerfomer
 };

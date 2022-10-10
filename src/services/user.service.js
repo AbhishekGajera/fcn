@@ -215,6 +215,16 @@ const getUserById = async (id) => {
 
 
 /**
+ * Get user by id
+ * @param {ObjectId} id
+ * @returns {Promise<User>}
+ */
+ const getPerfomaerById = async (id , userType, perfomanceType) => {
+  return User.findOne({ _id : ObjectId(id) , role : userType , perfomance : perfomanceType }).sort({updatedAt: -1});
+};
+
+
+/**
  * Get user by email
  * @param {string} email
  * @returns {Promise<User>}
@@ -328,5 +338,6 @@ module.exports = {
   updateUserById,
   deleteUserById,
   updateProductAssign,
-  queryUsersSIP
+  queryUsersSIP,
+  getPerfomaerById
 };

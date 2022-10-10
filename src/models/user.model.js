@@ -177,6 +177,10 @@ const userSchema = mongoose.Schema(
       type: String,
       default: ''
     },
+    perfomance: {
+      type: Number,
+      default: 0
+    },
   },
   {
     timestamps: true,
