@@ -16,6 +16,15 @@ const getConnectedById = async (id) => {
 };
 
 
+const deleteContactById = async (contactId) => {
+  const contact = await getConnectedById(contactId);
+  if (!contact) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'contact not found');
+  }
+  await contact.remove();
+  return contact;
+}
+
 
 /**
  * Get Contacts
@@ -34,5 +43,6 @@ const getConnectedById = async (id) => {
 module.exports = {
     addContact,
     getConnectedById,
-  getContactList
+  getContactList,
+  deleteContactById
 };

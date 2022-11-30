@@ -18,6 +18,10 @@ router
 .get(contactController.getContacts)
 
 router
+.route('/delete-contact/:contactId')
+.delete(contactController.contactDelete)
+
+router
 .route('/get-connected-id/:id')
 .get(contactController.getConnectId)
 
