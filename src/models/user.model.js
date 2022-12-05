@@ -157,6 +157,14 @@ const userSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    aadhar_card_img : {
+      type: String,
+      required: false,
+    },
+    pan_card_img : {
+      type: String,
+      required: false,
+    },
     b_head_name: {
       type: String,
       default: ''
