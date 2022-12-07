@@ -7,7 +7,7 @@ const { getUserById } = require('./user.service')
 const ObjectId = require('mongoose').Types.ObjectId; 
 
 /**
- * Create a target
+ * Create a notification
  * @param {Object} leaveBody
  * @returns {Promise<Notifications>}
  */
@@ -27,7 +27,7 @@ const addNotifications = async (leaveBody) => {
 
 
 /**
- * Get target by id
+ * Get notification by id
  * @param {ObjectId} id
  * @returns {Promise<User>}
  */
@@ -37,7 +37,7 @@ const getNotificationsById = async (id) => {
 
 
 /**
- * Update target by id
+ * Update notification by id
  * @param {ObjectId} leaveId
  * @param {Object} updateBody
  * @returns {Promise<User>}
@@ -48,13 +48,6 @@ const updateNotificationsById = async (leaveId, updateBody) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Notifications not found');
   }
 
-  if (updateBody?.user) {
-    const user = await getUserById(updateBody?.user)
-    if (!user) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-    }
-  }
-
   Object.assign(notification, updateBody);
   await notification.save();
   return notification;
@@ -63,7 +56,7 @@ const updateNotificationsById = async (leaveId, updateBody) => {
 
 
 /**
- * Delete target by id
+ * Delete notification by id
  * @param {ObjectId} notificationId
  * @returns {Promise<Employee>}
  */
@@ -78,7 +71,7 @@ const deleteNotificationsById = async (notificationId) => {
 
 
 /**
- * Get targets
+ * Get notifications
  * @returns {Promise<Employee>}
  */
 const getNotificationsList = async (filter, options, userId) => {
@@ -106,12 +99,12 @@ const getNotificationsList = async (filter, options, userId) => {
  */
  const getPersonalizedeList = async (id,page,limit) => {
   const notifications = await Notification.find({
-    targetAudience : 'specificUser',
+    notificationAudience : 'specificUser',
     user : new ObjectId(id)
   }).skip(page).limit(limit);
 
   const totalCount = await Notification.count({
-    targetAudience : 'specificUser',
+    notificationAudience : 'specificUser',
     user : new ObjectId(id)
   })
 

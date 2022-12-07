@@ -38,6 +38,10 @@ router
 .get(notificationController.getNotificationsByBranch)
 
 router
+.route('/update-notification/:id')
+.patch(notificationController.notificationUpdateById)
+
+router
 .route('/update-notification')
 .patch(notificationController.notificationUpdate)
 

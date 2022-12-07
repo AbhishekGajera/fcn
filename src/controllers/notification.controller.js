@@ -23,7 +23,12 @@ const getNotifiById = catchAsync(async (req, res) => {
 });
 
 const notificationUpdate = catchAsync(async (req, res) => {
-  const result = await updateNotificationsById(req.body.trasaction_id,req.body);
+  const result = await updateNotificationsById(req.params.trasaction_id,req.body);
+  res.send(result);
+});
+
+const notificationUpdateById = catchAsync(async (req, res) => {
+  const result = await updateNotificationsById(req.params.id,req.body);
   res.send(result);
 });
 
@@ -73,5 +78,6 @@ module.exports = {
   getNotificationsByBranch,
   addview,
   getNotifiById,
-  getPersonalizedNotification
+  getPersonalizedNotification,
+  notificationUpdateById
 };
