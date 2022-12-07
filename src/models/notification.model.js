@@ -38,6 +38,10 @@ const notificationSchema = new mongoose.Schema({
   hasShowen : {
     type : Boolean,
     default : false
+  },
+  is_delete : {
+    type : String,
+    default : false
   }
 },
 {

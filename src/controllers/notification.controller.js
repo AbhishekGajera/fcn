@@ -33,7 +33,7 @@ const notificationDelete = catchAsync(async (req, res) => {
 });
 
 const getNotifications = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['title', 'targetAudience','user','status']);
+  const filter = pick(req.query, ['title', 'targetAudience','user','status','is_delete']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await getNotificationsList(filter, options,req?.user._id);
   res.send(result);
@@ -50,7 +50,7 @@ const getNotificationsByUser = catchAsync(async (req, res) => {
 });
 
 const getNotificationsByBranch = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['role','to_user']);
+  const filter = pick(req.query, ['role','to_user','is_delete']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await getNotificationsBranch(filter,options);
   res.send(result);
