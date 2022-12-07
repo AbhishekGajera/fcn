@@ -46,23 +46,35 @@ const powerOneSchema = new mongoose.Schema({
   },
   aadhar_card_img : {
     type : String,
-    required : true
+    required : false
   },
   pan_card_img : {
     type : String,
-    required : true
+    required : false
   },
   passbook_card_img : {
     type : String,
-    required : true
-  },
-  voter_card_img : {
-    type : String,
-    required : true
+    required : false
   },
   cheque : {
     type : String,
-    required : true
+    required : false
+  },
+  payment_gateway : {
+    type : String,
+    required : false
+  },
+  passport_number : {
+    type : String,
+    required : false
+  },
+  pan_number : {
+    type : String,
+    required : false
+  },
+  aadhar_number : {
+    type : String,
+    required : false
   },
   rtgs : {
     type : String,
