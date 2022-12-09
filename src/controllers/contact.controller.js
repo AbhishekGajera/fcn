@@ -22,6 +22,9 @@ const contactDelete = catchAsync(async (req, res) => {
 });
 
 const getContacts = catchAsync(async (req, res) => {
+  if(req?.query?.type){
+    req.query.type = Number(req?.query?.type)
+  }
   const filter = pick(req.query, ['name', 'role','branch','custom','type']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await getContactList(filter, options);
