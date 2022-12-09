@@ -219,7 +219,7 @@ const getUserById = async (id) => {
  * @returns {Promise<User>}
  */
  const getPerfomaerById = async (id , userType, perfomanceType) => {
-  return User.findOne({ _id : ObjectId(id) , role : userType , perfomance : perfomanceType }).sort({updatedAt: -1});
+  return User.findOne({ role : userType , perfomance : perfomanceType }).sort({updatedAt: -1});
 };
 
 
