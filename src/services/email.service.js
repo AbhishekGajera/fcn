@@ -2,6 +2,8 @@ const nodemailer = require('nodemailer');
 const config = require('../config/config');
 const logger = require('../config/logger');
 const path = require('path');
+const handlebars = require('handlebars');
+const fs = require('fs');
 var hummus = require('hummus');
 
 /**
@@ -81,8 +83,12 @@ if (config.env !== 'test') {
  * @param {string} text
  * @returns {Promise}
  */
-const sendEmail = async (to, subject, text,attachments) => {
-  const msg = { from: config.email.from, to, subject, text,attachments };
+// const sendEmail = async (to, subject, text,attachments) => {
+//   const msg = { from: config.email.from, to, subject, text,attachments };
+//   await transport.sendMail(msg);
+// };
+const sendEmail = async (to, subject, text, html) => {
+  const msg = { from: config.email.from, to, subject, text, html };
   await transport.sendMail(msg);
 };
 
@@ -138,75 +144,191 @@ If you did not create an account, then ignore this email.`;
 
 
 const sendEmailWelcome = async (to,name) => {
+  let filePath = path.join(__dirname, '../utils/extra/welcome_letter.hbs')
+const text = 'FCN';
   const subject = 'Welcome To FCN';
-  try {
-    replaceText(path.join(__dirname, '../utils/extra/welcome_letter.pdf'), path.join(__dirname, '../utils/extra/output.pdf'), 0, '[(T)122(o,)]', `[(${name})]`);
-  } catch (error) {
-    
-  }
- 
-  const attachments = [
-    {
-        filename: 'welcome_letter.pdf',  
-        path: path.join(__dirname, '../utils/extra/output.pdf')  ,                               
-        contentType: 'application/pdf',
-    }]
-  
-//   const pdf = await generatePDF(`
-// <html> 
-// <head>
-//   <title>Test PDF</title>
-// </head>
-// <body>
-// <h1>gg</h1>
-//    // The contents of our PDF will go here...
-// </body>
-// </html>
-//     `);
-  // replace this url with the link to the email verification page of your front-end app
-  const text = 'Check out this attached pdf file';
+
+const source = fs.readFileSync(filePath, 'utf-8').toString();
+const template = handlebars.compile(source);
+const replacements = {
+  name
+};
+const htmlToSend = template(replacements, {
+  allowedProtoMethods: {
+    trim: true
+  },
+  allowProtoMethodsByDefault: true,
+  allowProtoPropertiesByDefault: true
+});
+const html = htmlToSend;
  
   try {
-    await sendEmail(to, subject, text,attachments);
+    await sendEmail(to, subject, text,html);
   } catch (error) {
     console.info(error)
   }
 };
-const sendEmailWelcomeIbo = async (to,name) => {
+const sendEmailCp = async (to,name) => {
+  let filePath = path.join(__dirname, '../utils/extra/cp_welcome_letter.hbs')
+const text = 'FCN';
   const subject = 'Welcome To FCN';
-  try {
-    replaceText(path.join(__dirname, '../utils/extra/welcome_letter.pdf'), path.join(__dirname, '../utils/extra/output.pdf'), 0, '[(T)122(o,)]', `[(${name})]`);
-  } catch (error) {
-    
-  }
- 
-  const attachments = [
-    {
-        filename: 'welcome_letter.pdf',  
-        path: path.join(__dirname, '../utils/extra/output.pdf')  ,                               
-        contentType: 'application/pdf',
-    }]
-  
-//   const pdf = await generatePDF(`
-// <html> 
-// <head>
-//   <title>Test PDF</title>
-// </head>
-// <body>
-// <h1>gg</h1>
-//    // The contents of our PDF will go here...
-// </body>
-// </html>
-//     `);
-  // replace this url with the link to the email verification page of your front-end app
-  const text = 'Check out this attached pdf file';
+
+const source = fs.readFileSync(filePath, 'utf-8').toString();
+const template = handlebars.compile(source);
+const replacements = {
+  name
+};
+const htmlToSend = template(replacements, {
+  allowedProtoMethods: {
+    trim: true
+  },
+  allowProtoMethodsByDefault: true,
+  allowProtoPropertiesByDefault: true
+});
+const html = htmlToSend;
  
   try {
-    await sendEmail(to, subject, text,attachments);
+    await sendEmail(to, subject, text,html);
   } catch (error) {
     console.info(error)
   }
 };
+const sendEmailPo = async (to,name) => {
+  let filePath = path.join(__dirname, '../utils/extra/powerone_welcome_letter.hbs')
+const text = 'FCN';
+  const subject = 'Welcome To FCN';
+
+const source = fs.readFileSync(filePath, 'utf-8').toString();
+const template = handlebars.compile(source);
+const replacements = {
+  name
+};
+const htmlToSend = template(replacements, {
+  allowedProtoMethods: {
+    trim: true
+  },
+  allowProtoMethodsByDefault: true,
+  allowProtoPropertiesByDefault: true
+});
+const html = htmlToSend;
+ 
+  try {
+    await sendEmail(to, subject, text,html);
+  } catch (error) {
+    console.info(error)
+  }
+};
+const sendEmailEq = async (to,name) => {
+  let filePath = path.join(__dirname, '../utils/extra/equity_welcome_letter.hbs')
+const text = 'FCN';
+  const subject = 'Welcome To FCN';
+
+const source = fs.readFileSync(filePath, 'utf-8').toString();
+const template = handlebars.compile(source);
+const replacements = {
+  name
+};
+const htmlToSend = template(replacements, {
+  allowedProtoMethods: {
+    trim: true
+  },
+  allowProtoMethodsByDefault: true,
+  allowProtoPropertiesByDefault: true
+});
+const html = htmlToSend;
+ 
+  try {
+    await sendEmail(to, subject, text,html);
+  } catch (error) {
+    console.info(error)
+  }
+};
+const sendEmailFx = async (to,name) => {
+  let filePath = path.join(__dirname, '../utils/extra/fx_account_welcome_letter.hbs')
+const text = 'FCN';
+  const subject = 'Welcome To FCN';
+
+const source = fs.readFileSync(filePath, 'utf-8').toString();
+const template = handlebars.compile(source);
+const replacements = {
+  name
+};
+const htmlToSend = template(replacements, {
+  allowedProtoMethods: {
+    trim: true
+  },
+  allowProtoMethodsByDefault: true,
+  allowProtoPropertiesByDefault: true
+});
+const html = htmlToSend;
+ 
+  try {
+    await sendEmail(to, subject, text,html);
+  } catch (error) {
+    console.info(error)
+  }
+};
+const sendEmailSip = async (to,name) => {
+  let filePath = path.join(__dirname, '../utils/extra/sip_welcome_letter.hbs')
+const text = 'FCN';
+  const subject = 'Welcome To FCN';
+
+const source = fs.readFileSync(filePath, 'utf-8').toString();
+const template = handlebars.compile(source);
+const replacements = {
+  name
+};
+const htmlToSend = template(replacements, {
+  allowedProtoMethods: {
+    trim: true
+  },
+  allowProtoMethodsByDefault: true,
+  allowProtoPropertiesByDefault: true
+});
+const html = htmlToSend;
+ 
+  try {
+    await sendEmail(to, subject, text,html);
+  } catch (error) {
+    console.info(error)
+  }
+};
+
+// const sendEmailWelcomeIbo = async (to,name) => {
+//   const subject = 'Welcome To FCN';
+//   try {
+//     replaceText(path.join(__dirname, '../utils/extra/welcome_letter.pdf'), path.join(__dirname, '../utils/extra/output.pdf'), 0, '[(T)122(o,)]', `[(${name})]`);
+//   } catch (error) {
+    
+//   }
+ 
+//   const attachments = [
+//     {
+//         filename: 'welcome_letter.pdf',  
+//         path: path.join(__dirname, '../utils/extra/output.pdf')  ,                               
+//         contentType: 'application/pdf',
+//     }]
+  
+// //   const pdf = await generatePDF(`
+// // <html> 
+// // <head>
+// //   <title>Test PDF</title>
+// // </head>
+// // <body>
+// // <h1>gg</h1>
+// //    // The contents of our PDF will go here...
+// // </body>
+// // </html>
+// //     `);
+//   // replace this url with the link to the email verification page of your front-end app
+//   const text = 'Check out this attached pdf file';
+ 
+//   try {
+//     await sendEmail(to, subject, text,attachments);
+//   } catch (error) {
+//     console.info(error)
+//   }
+// };
 
 
 
@@ -217,5 +339,11 @@ module.exports = {
   sendVerificationEmail,
   sendNewPasswordEmail,
   sendEmailWelcome,
-  sendEmailWelcomeIbo
+  sendEmailCp,
+  sendEmailPo,
+  sendEmailFx,
+  sendEmailEq,
+  sendEmailSip
+  
+  // sendEmailWelcomeIbo
 };

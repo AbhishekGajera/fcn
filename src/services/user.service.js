@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const { Console } = require('winston/lib/winston/transports');
 const { User, Product } = require('../models');
 const ApiError = require('../utils/ApiError');
-const { sendNewPasswordEmail, sendEmailWelcome,sendEmailWelcomeIbo } = require('./email.service')
+const { sendNewPasswordEmail, sendEmailWelcome,sendEmailCp,sendEmailPo,sendEmailEq,sendEmailFx,sendEmailSip } = require('./email.service')
 const ObjectId = require('mongoose').Types.ObjectId; 
 
 /**
@@ -17,8 +17,9 @@ console.log("ui",userId)
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-
+2
   const productDetail = await Product.findById(userBody?.product)
+  console.log("pd",productDetail)
   let commision = 0;
   if (productDetail) {
     commision = ((+userBody.minAmount || 0) * (+productDetail.commision || 0)) / 100;
@@ -38,7 +39,7 @@ console.log("ui",userId)
     ibo.total_earning = (ibo?.total_earning || 0) + commision;
     ibo.save();
     try {
-      await sendEmailWelcomeIbo(userBody.email, userBody.name)
+      await sendEmailWelcome(userBody.email, userBody.name)
     } catch (error) {
       console.info(error)
     }
@@ -70,6 +71,21 @@ console.log("ui",userId)
 
 
   try {
+    if(productDetail.category?.toUpperCase() === 'COLLATERAL PLAN (CP)'){
+      await sendEmailCp(userBody.email, userBody.name)
+    }
+    if(productDetail.category?.toUpperCase() === 'POWERONE'){
+      await sendEmailPo(userBody.email, userBody.name)
+    } 
+    if(productDetail.category?.toUpperCase() === 'EQUITY'){
+      await sendEmailEq(userBody.email, userBody.name)
+    }
+    if(productDetail.category?.toUpperCase() === 'FOREX'){
+      await sendEmailFx(userBody.email, userBody.name)
+    }
+    if(productDetail.category?.toUpperCase() === 'SIP'){
+      await sendEmailSip(userBody.email, userBody.name)
+    }
     await sendEmailWelcome(userBody.email, userBody.name)
   } catch (error) {
     console.info(error)
