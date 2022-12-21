@@ -185,6 +185,14 @@ const userSchema = mongoose.Schema(
       type: String,
       default: ''
     },
+    registration_date: {
+      type: Date,
+      default: ''
+    },
+    maturity_date: {
+      type: Date,
+      default: ''
+    },
     perfomance: {
       type: Number,
       default: 0

@@ -8,24 +8,26 @@ const register = {
     name: Joi.string(),
     first_name: Joi.string(),
     last_name: Joi.string(),
-       avatar: Joi.string(),
+    avatar: Joi.string(),
     dob: Joi.string().required(),
     contactno: Joi.string().required(),
     country: Joi.string().required(),
     bankIfscCode: Joi.string(),
     address: Joi.string(),
     bankAccNo: Joi.string(),
-    branch : Joi.string(),
+    branch: Joi.string(),
     IBO: Joi.string(),
-    role: Joi.string().valid('user', 'admin','IBO','branch'),
+    role: Joi.string().valid('user', 'admin', 'IBO', 'branch'),
     status: Joi.number(),
     aadhar_card_no: Joi.string(),
+    registration_date: Joi.string(),
+    maturity_date: Joi.string(),
     pan_card_no: Joi.string(),
-    branch_head : {
-      name : Joi.string(),
-      contact_no : Joi.string(),
-      aadhar_card_no : Joi.string(),
-      pan_card_no : Joi.string()
+    branch_head: {
+      name: Joi.string(),
+      contact_no: Joi.string(),
+      aadhar_card_no: Joi.string(),
+      pan_card_no: Joi.string()
     }
   }),
 };
@@ -38,7 +40,7 @@ const googleRegister = {
 
 const linkedinRegister = {
   body: Joi.object().keys({
-    code : Joi.string().required()
+    code: Joi.string().required()
   }),
 };
 
