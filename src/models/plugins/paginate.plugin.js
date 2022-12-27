@@ -35,7 +35,7 @@ const paginate = (schema) => {
 
     const formateCustomValidation = function (spy) {
       Object.keys(spy).forEach(function (key) {
-        if(key !== 'IBO'){
+        if(key !== 'IBO' && key !== 'products.product'){
           spy[key] = { $regex: '.*' + spy[key] + '.*', $options: 'i' }
         }
         else {
