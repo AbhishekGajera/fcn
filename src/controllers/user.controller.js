@@ -4,6 +4,7 @@ const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { userService } = require('../services');
 const ObjectId = require('mongoose').Types.ObjectId; 
+const mongoose = require('mongoose');
 
 const createUser = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body,req.user.id);
@@ -12,7 +13,13 @@ const createUser = catchAsync(async (req, res) => {
 });
 
 const getUsers = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
+  let filter = pick(req.query, ['name', 'role','custom','branch','IBO','email','products']);
+
+  if(filter?.products){
+    filter = { ...filter, 'products.product' : mongoose.Types.ObjectId(filter?.products) };
+    delete filter.products
+  }
+
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
 
   if(filter?.IBO){

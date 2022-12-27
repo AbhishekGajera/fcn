@@ -55,7 +55,8 @@ const getUsers = {
     maxAmount: Joi.number(),
     total_earning: Joi.number(),
     product: Joi.string(),
-
+    populate: Joi.string(),
+    products: Joi.string()
   }),
 };
 

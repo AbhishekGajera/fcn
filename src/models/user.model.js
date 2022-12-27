@@ -118,7 +118,6 @@ const userSchema = mongoose.Schema(
       autopopulate: true
     },
     products: [{
-
       product: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'Product',
