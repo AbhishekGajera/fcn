@@ -2,8 +2,8 @@ const httpStatus = require('http-status');
 const { Console } = require('winston/lib/winston/transports');
 const { User, Product } = require('../models');
 const ApiError = require('../utils/ApiError');
-const { sendNewPasswordEmail, sendEmailWelcome,sendEmailCp,sendEmailPo,sendEmailEq,sendEmailFx,sendEmailSip } = require('./email.service')
-const ObjectId = require('mongoose').Types.ObjectId; 
+const { sendNewPasswordEmail, sendEmailWelcome, sendEmailCp, sendEmailPo, sendEmailEq, sendEmailFx, sendEmailSip } = require('./email.service')
+const ObjectId = require('mongoose').Types.ObjectId;
 
 /**
  * Create a user
@@ -11,15 +11,15 @@ const ObjectId = require('mongoose').Types.ObjectId;
  * @returns {Promise<User>}
  */
 const createUser = async (userBody, userId) => {
-console.log("ub",userBody)
-console.log("ui",userId)
+  console.log("ub", userBody)
+  console.log("ui", userId)
 
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-2
+  2
   const productDetail = await Product.findById(userBody?.product)
-  console.log("pd",productDetail)
+  console.log("pd", productDetail)
   let commision = 0;
   if (productDetail) {
     commision = ((+userBody.minAmount || 0) * (+productDetail.commision || 0)) / 100;
@@ -71,19 +71,19 @@ console.log("ui",userId)
 
 
   try {
-    if(productDetail.category?.toUpperCase() === 'COLLATERAL PLAN (CP)'){
+    if (productDetail.category?.toUpperCase() === 'COLLATERAL PLAN (CP)') {
       await sendEmailCp(userBody.email, userBody.name)
     }
-    if(productDetail.category?.toUpperCase() === 'POWERONE'){
+    if (productDetail.category?.toUpperCase() === 'POWERONE') {
       await sendEmailPo(userBody.email, userBody.name)
-    } 
-    if(productDetail.category?.toUpperCase() === 'EQUITY'){
+    }
+    if (productDetail.category?.toUpperCase() === 'EQUITY') {
       await sendEmailEq(userBody.email, userBody.name)
     }
-    if(productDetail.category?.toUpperCase() === 'FOREX'){
+    if (productDetail.category?.toUpperCase() === 'FOREX') {
       await sendEmailFx(userBody.email, userBody.name)
     }
-    if(productDetail.category?.toUpperCase() === 'SIP'){
+    if (productDetail.category?.toUpperCase() === 'SIP') {
       await sendEmailSip(userBody.email, userBody.name)
     }
     await sendEmailWelcome(userBody.email, userBody.name)
@@ -124,7 +124,7 @@ const queryUsersPowerone = async () => {
       }
     },
     {
-      $match : { 'products.product.name' : 'POWERONE'   }
+      $match: { 'products.product.name': 'POWERONE' }
     },
     {
       $unwind: {
@@ -141,14 +141,14 @@ const queryUsersPowerone = async () => {
     },
     {
       "$group": {
-          "_id": "tempId",
-          "totalValue": {
-              $sum: {
-                  $sum: "$products.minAmount"
-              }
+        "_id": "tempId",
+        "totalValue": {
+          $sum: {
+            $sum: "$products.minAmount"
           }
+        }
       }
-  }
+    }
   ]);
   // console.log("us",users.products)
 
@@ -170,7 +170,7 @@ const queryUsersSIP = async () => {
       }
     },
     {
-      $match : { 'products.product.name' : 'SIP'   }
+      $match: { 'products.product.name': 'SIP' }
     },
     {
       $unwind: {
@@ -187,22 +187,28 @@ const queryUsersSIP = async () => {
     },
     {
       "$group": {
-          "_id": "tempId",
-          "totalValue": {
-              $sum: {
-                  $sum: "$products.minAmount"
-              }
+        "_id": "tempId",
+        "totalValue": {
+          $sum: {
+            $sum: "$products.minAmount"
           }
+        }
       }
-  }
+    }
   ]);
   // console.log("us",users.products)
 
   return users;
 }
 
-const getUserByIbos = async (id) => {
-  return User.find({ IBO: id });
+const getUserByIbos = async (id, productId) => {
+  const cond = { IBO: id }
+
+  if (productId) {
+    cond['products.product'] = ObjectId(productId)
+  }
+  console.info(cond)
+  return User.find(cond);
 };
 
 const getProductById = async (id) => {
@@ -234,8 +240,8 @@ const getUserById = async (id) => {
  * @param {ObjectId} id
  * @returns {Promise<User>}
  */
- const getPerfomaerById = async (id , userType, perfomanceType) => {
-  return User.findOne({ role : userType , perfomance : perfomanceType }).sort({updatedAt: -1});
+const getPerfomaerById = async (id, userType, perfomanceType) => {
+  return User.findOne({ role: userType, perfomance: perfomanceType }).sort({ updatedAt: -1 });
 };
 
 
