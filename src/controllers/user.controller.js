@@ -43,8 +43,14 @@ const getUsersSIP = catchAsync(async (req, res) => {
   res.send(result);
 });
 const getUsersByBranch = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
+  const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email','products']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
+
+  if(filter?.products){
+    filter = { ...filter, 'products.product' : mongoose.Types.ObjectId(filter?.products) };
+    delete filter.products
+  }
+
   const result = await userService.queryUsers(filter, options);
   res.send(result);
 });
@@ -52,7 +58,7 @@ const getUsersByBranch = catchAsync(async (req, res) => {
 const getUsersByIbo = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name','role']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
-  const result = await userService.getUserByIbos(req.params.id);
+  const result = await userService.getUserByIbos(req.params.id , req.query.products);
   res.send(result);
 });
 const getUser = catchAsync(async (req, res) => {
