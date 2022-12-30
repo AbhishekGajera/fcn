@@ -16,6 +16,8 @@ const poweroneRoute = require('./powerone.route');
 const travelQueryRoute = require('./travelQuery.route');
 const notificationRoute = require('./notification.route');
 const DashnotificationRoute = require('./dashnotify.route');
+const passportRoute = require('./passport.route');
+const visaRoute = require('./visa.route');
 
 
 
@@ -94,6 +96,14 @@ const defaultRoutes = [
   {
     path : '/dashnotification',
     route : DashnotificationRoute
+  },
+  {
+    path : '/visa',
+    route : visaRoute
+  },
+  {
+    path : '/passport',
+    route : passportRoute
   }
   
 ];
