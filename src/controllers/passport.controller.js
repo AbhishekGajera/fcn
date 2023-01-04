@@ -17,7 +17,7 @@ const getPassports = catchAsync(async (req, res) => {
 });
 
 const getPassport = catchAsync(async (req, res) => {
-  const user = await passportService.getPassportById(req.params.eventId);
+  const user = await passportService.getPassportById(req.params.passportId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Passport not found');
   }
@@ -25,12 +25,12 @@ const getPassport = catchAsync(async (req, res) => {
 });
 
 const updatePassport = catchAsync(async (req, res) => {
-  const user = await passportService.updatePassportById(req.params.eventId, req.body);
+  const user = await passportService.updatePassportById(req.params.passportId, req.body);
   res.send(user);
 });
 
 const deletePassport = catchAsync(async (req, res) => {
-  await passportService.deletePassportById(req.params.eventId);
+  await passportService.deletePassportById(req.params.passportId);
   res.status(httpStatus.NO_CONTENT).send();
 });
 

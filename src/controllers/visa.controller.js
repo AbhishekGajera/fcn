@@ -17,7 +17,7 @@ const getVisas = catchAsync(async (req, res) => {
 });
 
 const getVisa = catchAsync(async (req, res) => {
-  const user = await visaService.getVisaById(req.params.eventId);
+  const user = await visaService.getVisaById(req.params.visaId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Visa not found');
   }
@@ -25,12 +25,12 @@ const getVisa = catchAsync(async (req, res) => {
 });
 
 const updateVisa = catchAsync(async (req, res) => {
-  const user = await visaService.updateVisaById(req.params.eventId, req.body);
+  const user = await visaService.updateVisaById(req.params.visaId, req.body);
   res.send(user);
 });
 
 const deleteVisa = catchAsync(async (req, res) => {
-  await visaService.deleteVisaById(req.params.eventId);
+  await visaService.deleteVisaById(req.params.visaId);
   res.status(httpStatus.NO_CONTENT).send();
 });
 
