@@ -29,6 +29,12 @@ const getUsers = catchAsync(async (req, res) => {
   const result = await userService.queryUsers(filter, options);
   res.send(result);
 });
+
+const blockUsers = async () => {
+  await userService.getMeaturedClient()
+  return true
+}
+
 const getUsersPowerone = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'role','custom','branch','IBO','email']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
@@ -122,5 +128,6 @@ module.exports = {
   deleteUser,
   productAssign,
   getUsersSIP,
-  getTopPerfomer
+  getTopPerfomer,
+  blockUsers
 };

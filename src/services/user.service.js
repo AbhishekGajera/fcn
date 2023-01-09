@@ -346,6 +346,11 @@ const deleteUserById = async (userId) => {
   return user;
 };
 
+
+const getMeaturedClient = async () => {
+  await User.updateMany({ maturity_date: { $lte: new Date() } }, { $set: { status: 1 } }, { multi: true, upsert: true, new: true })
+}
+
 module.exports = {
   createUser,
   queryUsers,
@@ -360,5 +365,6 @@ module.exports = {
   deleteUserById,
   updateProductAssign,
   queryUsersSIP,
-  getPerfomaerById
+  getPerfomaerById,
+  getMeaturedClient
 };
