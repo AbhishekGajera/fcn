@@ -4,10 +4,6 @@ const { toJSON,paginate } = require('./plugins');
 //powerOne
 
 const powerOneSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required : true
-  },
   email : {
     type : String,
     required : true
@@ -18,31 +14,31 @@ const powerOneSchema = new mongoose.Schema({
   },
   address : {
     type : String,
-    required : true
+    required : false
   },
   city : {
     type : String,
-    required : true
+    required : false
   },
   state : {
     type : String,
-    required : true
+    required : false
   },
   country : {
     type : String,
-    required : true
+    required : false
   },
   pancard : {
     type : Boolean,
-    required : true
+    required : false
   },
   aadharcard : {
     type : Boolean,
-    required : true
+    required : false
   },
   bankpassbook : {
     type : Boolean,
-    required : true
+    required : false
   },
   aadhar_card_img : {
     type : String,
@@ -53,14 +49,6 @@ const powerOneSchema = new mongoose.Schema({
     required : false
   },
   passbook_card_img : {
-    type : String,
-    required : false
-  },
-  cheque : {
-    type : String,
-    required : false
-  },
-  payment_gateway : {
     type : String,
     required : false
   },
@@ -76,13 +64,17 @@ const powerOneSchema = new mongoose.Schema({
     type : String,
     required : false
   },
-  rtgs : {
+  method_by : {
     type : String,
-    required : true
+    required : false
   },
-  neft : {
+  payment_no : {
     type : String,
-    required : true
+    required : false
+  },
+  payment_screenshot : {
+    type : String,
+    required : false
   },
   user: {
     type: mongoose.SchemaTypes.ObjectId,
