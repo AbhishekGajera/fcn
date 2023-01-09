@@ -106,8 +106,11 @@ const userSchema = mongoose.Schema(
       type: Number,
       required: false,
     },
-
     branch: {
+      type: String,
+      required: false,
+    },
+    cancel_cheque: {
       type: String,
       required: false,
     },

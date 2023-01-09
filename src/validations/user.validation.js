@@ -35,8 +35,8 @@ const createUser = {
     b_head_contact_no: Joi.string(),
     b_aadhar_card_no: Joi.string(),
     b_pan_card_no: Joi.string(),
-    self_declaration: Joi.string()
-
+    self_declaration: Joi.string(),
+    cancel_cheque: Joi.string()
   }),
 };
 
@@ -100,6 +100,7 @@ const updateUser = {
       b_head_contact_no: Joi.string(),
       aadhar_card_no: Joi.string(),
       pan_card_no: Joi.string(),
+      cancel_cheque: Joi.string(),
       branch_head: {
         name: Joi.string(),
         contact_no: Joi.string(),
