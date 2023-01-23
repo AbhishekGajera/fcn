@@ -18,11 +18,11 @@ const productApprove = catchAsync(async (req, res) => {
   form.uploadDir = uploadFolder;
   console.info("resss", req?.files)
 
+  const file = req?.files?.image;
   // Check if multiple files or a single file
-  if (!req?.files?.length) {
+  if (file) {
     //Single file
 
-    const file = req?.files?.image;
 
     // creates a valid name by removing spaces
     const fileName = encodeURIComponent(file?.name?.replace(/\s/g, '-'));
@@ -44,6 +44,11 @@ const productApprove = catchAsync(async (req, res) => {
     } catch (error) {
       console.error(error)
     }
+  }
+  else {
+    const data = await approveProduct(req.fields);
+    res.status(httpStatus.CREATED).send(data);
+
   }
 
 });
