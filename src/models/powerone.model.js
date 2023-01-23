@@ -72,6 +72,22 @@ const powerOneSchema = new mongoose.Schema({
     type : String,
     required : false
   },
+  cheque : {
+    type : String,
+    required : false
+  },
+  payment_gateway : {
+    type : String,
+    required : false
+  },
+  rtgs : {
+    type : String,
+    required : false
+  },
+  neft : {
+    type : String,
+    required : false
+  },
   payment_screenshot : {
     type : String,
     required : false
